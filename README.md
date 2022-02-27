@@ -26,7 +26,7 @@ Project is created with:
 * Io library - File, paths.
 
 ## Features
-- Most of the parameters are ajustable, for instance: ball speed, life points, Screen resoulotion.
+- Most of the parameters are adjustable, for instance: ball speed, lifepoints, Screen resolution.
 
 ## Screenshots
 > The boot process of the tournament.
