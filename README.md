@@ -33,8 +33,15 @@ Project is created with:
 
 ![img1](./img/img1.png)
 
+> Example of the Gameplay.
 
-> Example of the gameplay.
+![img3](./img/img3.png)
+
+> Example of "Winning" screen.
+
+![img4](./img/img4.png)
+
+> Example of "Gameover" screen.
 
 ![img2](./img/img2.png)
 
