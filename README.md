@@ -54,7 +54,7 @@ Project is created with:
 The project is completed but probably will not get updated, because it was part of a course i took, and i moved on in the course to expand my knowledge⚡.
 
 ### Known issues
-* 
+* Sometimes if you hit the brick sides the ball will be returned like it was hit the bottom of the brick.
 
 ## Acknowledgements
 I would want to thank CampusIL and the team behind the "Object oriented programing" course!
