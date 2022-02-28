@@ -29,22 +29,22 @@ Project is created with:
 - Most of the parameters are adjustable, for instance: ball speed, lifepoints, Screen resolution.
 
 ## Screenshots
-> The boot process of the tournament.
+> Start menu of the game.
 
 ![img1](./img/img1.png)
 
 
-> Example to process of game.
+> Example of the gameplay.
 
 ![img2](./img/img2.png)
 
 ## Setup
-1. First download all the folders(except img folder)
-2. Open Tournament.java file in your java IDE
+1. First download all the folders.
+2. Open Gamemanager.java file in your java IDE.
 3. Enjoy!
 
 ## Project Status
-The project is completed but no longer get updated, because it was part of a course i took, and i moved on in the course to expand my knowledge⚡.
+The project is completed but probably will not get updated, because it was part of a course i took, and i moved on in the course to expand my knowledge⚡.
 
 ### Known issues
 * 
