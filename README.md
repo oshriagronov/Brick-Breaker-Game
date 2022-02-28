@@ -13,7 +13,9 @@
 * [Contact](#contact)
 
 ## General info
-- You start the game with 3 life point(it's changeable in the code, hearts as life point❤️) and evey brick you break you get a 100 points(it's changeable in the code)💯. 
+- You start the game with 3 life point(it's changeable in the code, hearts as life point❤️)
+- Evey brick you break you get a 100 points(it's changeable in the code)💯. 
+- The number of bricks depends on screen resolution(the higher the resolution the more bricks will be).
 	
 ## Technologies
 Project is created with:
@@ -55,6 +57,7 @@ The project is completed but probably will not get updated, because it was part 
 
 ### Known issues
 * Sometimes if you hit the brick sides the ball will be returned like it was hit the bottom of the brick.
+* The only option to replay is to close the game and run again(need to add a reset option).
 
 ## Acknowledgements
 I would want to thank CampusIL and the team behind the "Object oriented programing" course!
