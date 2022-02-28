@@ -28,7 +28,7 @@ Project is created with:
 * Io library - File, paths.
 
 ## Features
-- Most of the parameters are adjustable, for instance: ball speed, lifepoints, Screen resolution💭.
+- Most of the parameters are adjustable, for instance: ball speed, lifepoints, Screen resolution.
 
 ## Screenshots
 > Start menu of the game.
