@@ -13,7 +13,7 @@
 * [Contact](#contact)
 
 ## General info
-- You start the game with 3 life point(it's changeable in the code, hearts as life point❤️)
+- You start the game with 3 life point❤️(it's changeable in the code, hearts as life point).
 - Evey brick you break you get a 100 points(it's changeable in the code)💯. 
 - The number of bricks depends on screen resolution(the higher the resolution the more bricks will be).
 	
@@ -28,7 +28,7 @@ Project is created with:
 * Io library - File, paths.
 
 ## Features
-- Most of the parameters are adjustable, for instance: ball speed, lifepoints, Screen resolution.
+- Most of the parameters are adjustable, for instance: ball speed, lifepoints, Screen resolution💭.
 
 ## Screenshots
 > Start menu of the game.
