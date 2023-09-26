@@ -1,6 +1,6 @@
 # Brick Breaker Game - Written in java
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)[![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)[![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)[![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg)
-> The Project is a tramdinial brick breaker game, you need to break all the bricks with the ball and the paddle!🧱.
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)<br>
+The Project is a traditional brick breaker game where you need to break all the bricks with the ball and the paddle surface!🧱.
 
 ## Table of contents
 * [General info](#general-info)
@@ -13,9 +13,9 @@
 * [Contact](#contact)
 
 ## General info
-- You start the game with 3 life point❤️(it's changeable in the code, hearts as life point).
-- Evey brick you break you get a 100 points(it's changeable in the code)💯. 
-- The number of bricks depends on screen resolution(the higher the resolution the more bricks will be).
+- You start the game with 3 life point ❤️(it's changeable in the code, hearts as life point).
+- Evey brick you break you get a 100 points 💯(it's changeable in the code). 
+- The number of bricks depends on screen resolution (the higher the resolution the more bricks will be).
 	
 ## Technologies
 Project is created with:
@@ -31,19 +31,19 @@ Project is created with:
 - Most of the parameters are adjustable, for instance: ball speed, lifepoints, Screen resolution.
 
 ## Screenshots
-> Start menu of the game.
+> Start menu.
 
 ![img1](./img/img1.png)
 
-> Example of the Gameplay.
+> Gameplay screen.
 
 ![img3](./img/img3.png)
 
-> Example of "Winning" screen.
+> "Winning" screen.
 
 ![img4](./img/img4.png)
 
-> Example of "Gameover" screen.
+> "Gameover" screen.
 
 ![img2](./img/img2.png)
 
@@ -57,7 +57,7 @@ The project is completed but probably will not get updated, because it was part 
 
 ### Known issues
 * Sometimes if you hit the brick sides the ball will be returned like it was hit the bottom of the brick.
-* The only option to replay is to close the game and run again(need to add a reset option).
+* The only way to replay the game is to close the game and run again.
 
 ## Acknowledgements
 I would want to thank CampusIL and the team behind the "Object oriented programing" course!
