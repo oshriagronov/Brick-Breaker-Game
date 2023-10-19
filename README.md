@@ -1,6 +1,6 @@
 # Brick Breaker Game - Written in java
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)<br>
-The Project is a traditional brick breaker game where you need to break all the bricks with the ball and the paddle surface!🧱.
+The Project is a traditional brick breaker game where the player needs to break all the bricks with the ball and the paddle surface!🧱.
 
 ## Table of contents
 * [General info](#general-info)
@@ -8,27 +8,22 @@ The Project is a traditional brick breaker game where you need to break all the 
 * [Features](#features)
 * [Screenshots](#screenshots)
 * [Setup](#setup)
-* [Project Status](#project-status)
 * [Acknowledgements](#acknowledgements)
-* [Contact](#contact)
 
 ## General info
-- You start the game with 3 life point ❤️(it's changeable in the code, hearts as life point).
-- Evey brick you break you get a 100 points 💯(it's changeable in the code). 
-- The number of bricks depends on screen resolution (the higher the resolution the more bricks will be).
+- Player start the game with 3 life point.
+- Evey brick destroyed gives a 100 points.
 	
 ## Technologies
-Project is created with:
-* Visual studio code
 * Java SE17
 * Utilities library - Scanner.
-* Swing library - Timer, JFrame, JLabel, JButtom, ImageIcon.
-* AWT library - KeyListener, Action listener, KeyEvent, ActionEvent, GridBagLayout. Rectangle, Dimension, Font, Color.
-* Javax library - sound, sample, AudioInputStream, AudioSystem, Clip.
-* Io library - File, paths.
+* Swing library
+* AWT library
+* Javax library
+* Io library
 
 ## Features
-- Most of the parameters are adjustable, for instance: ball speed, lifepoints, Screen resolution.
+- A lot of the parameters are customizable, for instance: ball speed, lifepoints, Screen resolution are all customizable.
 
 ## Screenshots
 > Start menu.
@@ -52,16 +47,11 @@ Project is created with:
 2. Open Gamemanager.java file in your java IDE.
 3. Enjoy!
 
-## Project Status
-The project is completed but probably will not get updated, because it was part of a course i took, and i moved on in the course to expand my knowledge⚡.
-
 ### Known issues
 * Sometimes if you hit the brick sides the ball will be returned like it was hit the bottom of the brick.
 * The only way to replay the game is to close the game and run again.
+* The number of bricks depends on screen resolution(the higher the resolution the more bricks will be and vice versa).
 
 ## Acknowledgements
 I would want to thank CampusIL and the team behind the "Object oriented programing" course!
 > Link to the course home page [here](https://campus.gov.il/course/huji_acd_rfp4_huji_oop/)
-
-## Contact
-Created by Oshri Agronov, feel free to contact me!:v:
