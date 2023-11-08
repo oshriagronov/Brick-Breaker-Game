@@ -11,7 +11,7 @@ The Project is a traditional brick breaker game where the player needs to break 
 * [Acknowledgements](#acknowledgements)
 
 ## General info
-- Player start the game with 3 life point.
+- Players start the game with 3 life points.
 - Evey brick destroyed gives a 100 points.
 	
 ## Technologies
@@ -23,7 +23,7 @@ The Project is a traditional brick breaker game where the player needs to break 
 * Io library
 
 ## Features
-- A lot of the parameters are customizable, for instance: ball speed, lifepoints, Screen resolution are all customizable.
+- A lot of the parameters are customizable, for instance: ball speed, life points, Screen resolution are all customizable.
 
 ## Screenshots
 > Start menu.
@@ -53,5 +53,5 @@ The Project is a traditional brick breaker game where the player needs to break 
 * The number of bricks depends on screen resolution(the higher the resolution the more bricks will be and vice versa).
 
 ## Acknowledgements
-I would want to thank CampusIL and the team behind the "Object oriented programing" course!
+I would like to thank CampusIL and the team behind the "Object oriented programming" course!
 > Link to the course home page [here](https://campus.gov.il/course/huji_acd_rfp4_huji_oop/)
