@@ -12,7 +12,7 @@ The Project is a traditional brick breaker game where the player needs to break 
 
 ## General info
 - Players start the game with 3 life points.
-- Evey brick destroyed gives a 100 points.
+- Every brick destroyed gives a 100 points.
 	
 ## Technologies
 * Java SE17
