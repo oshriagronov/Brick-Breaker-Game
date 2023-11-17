@@ -1,4 +1,4 @@
-# Brick Breaker Game - Written in java
+# Brick Breaker Game
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)<br>
 The Project is a traditional brick breaker game where the player needs to break all the bricks with the ball and the paddle surface!🧱.
 
