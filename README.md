@@ -1,56 +1,77 @@
-# Brick Breaker Game
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)<br>
-The Project is a traditional brick breaker game where the player needs to break all the bricks with the ball and the paddle surface!🧱.
+<br />
+<div align="center">
+  <a href="https://github.com/oshriagronov/Brick-Breaker">
+    <img src="logo.png" alt="Logo" width="200" height="200">
+  </a>
+<h3 align="center">Brick Breaker</h3>
+  <p align="center">
+    Traditional brick breaker game where the player needs to break all the bricks with the ball and the paddle surface.
+  </p>
+</div>
 
-## Table of contents
-* [General info](#general-info)
-* [Technologies](#technologies)
-* [Features](#features)
-* [Screenshots](#screenshots)
-* [Setup](#setup)
-* [Acknowledgements](#acknowledgements)
+## About
+This project is a classic Brick Breaker game developed in Java. The game was built from the ground up, utilizing the javax.swing and java.awt libraries to handle the graphical user interface and event-driven programming.<br/>
+This implementation demonstrates a solid understanding of object-oriented principles and game loop mechanics, providing a fun and engaging user experience while showcasing the capabilities of Java for desktop applications.
 
-## General info
-- Players start the game with 3 life points.
-- Every brick destroyed gives a 100 points.
+### Key features
+- Parameters are customizable: ball speed, life points, Screen resolution.
+- Life points system.
+- Score system.
 	
-## Technologies
-* Java SE17
+## Technologies Used
+* Java SE17.
 * Utilities library - Scanner.
-* Swing library
-* AWT library
-* Javax library
-* Io library
+* Swing library.
+* AWT library.
+* Javax library.
+* Io library.
 
-## Features
-- A lot of the parameters are customizable, for instance: ball speed, life points, Screen resolution are all customizable.
 
-## Screenshots
+## Media
 > Start menu.
-
-![img1](./img/img1.png)
+<img src="./img/img1.png" alt="Logo" width="600" height="600">
 
 > Gameplay screen.
+<img src="./img/img3.png" alt="v" width="600" height="600">
 
-![img3](./img/img3.png)
 
 > "Winning" screen.
+<img src="./img/img4.png" alt="Winning screen" width="600" height="600">
 
-![img4](./img/img4.png)
 
 > "Gameover" screen.
+<img src="./img/img2.png" alt="Gameover screen" width="600" height="600">
 
-![img2](./img/img2.png)
 
-## Setup
-1. First download all the folders.
-2. Open Gamemanager.java file in your java IDE.
-3. Enjoy!
+## Getting Started
+
+To get a local copy up and running follow these simple steps.
+
+### Prerequisites
+
+- Linux, MacOS or Windows
+- IDE with java
+
+### Installation
+---
+
+1. **Clone and enter the Magnetron repository:**
+
+   ```bash
+   git clone https://github.com/oshriagronov/brick-breaker && cd brick-breaker
+   ```
+
+2. **Open the brick-breaker folder in your IDE**
+
+
+3. **Run Gamemanager.java file!**  
+
 
 ### Known issues
 * Sometimes if you hit the brick sides the ball will be returned like it was hit the bottom of the brick.
 * The only way to replay the game is to close the game and run again.
 * The number of bricks depends on screen resolution(the higher the resolution the more bricks will be and vice versa).
+
 
 ## Acknowledgements
 I would like to thank CampusIL and the team behind the "Object oriented programming" course!
