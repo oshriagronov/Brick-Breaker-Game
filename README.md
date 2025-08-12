@@ -1,6 +1,6 @@
 <br />
 <div align="center">
-  <a href="https://github.com/oshriagronov/Brick-Breaker">
+  <a href="https://github.com/oshriagronov/brick-breaker">
     <img src="logo.png" alt="Logo" width="200" height="200">
   </a>
 <h3 align="center">Brick Breaker</h3>
