@@ -29,7 +29,8 @@ public class Gameplay implements KeyListener, ActionListener{
     private int paddle_moving_speed; // the speed that the paddle will move(right and left depend on what key you pressed).
     // the hegiht where the ball considered missed and the player will lose life point.
     private int miss_height;
-
+    private Rectangle ballBounds = new Rectangle();
+    private Rectangle paddleBounds = new Rectangle();
 // ## Gameplay constructor.
     public Gameplay(Player player, Screen screen, SoundEffect sound_effect, Ball ball, Paddle paddle, Brick [] brick_array){
         // get all objects related to Gameplay mechanic system.
@@ -70,7 +71,8 @@ public class Gameplay implements KeyListener, ActionListener{
     public void actionPerformed(ActionEvent e) {
         int ball_position_x = ball.get_x();
         int ball_position_y = ball.get_y();
-
+        ballBounds.setBounds(ball_position_x, ball_position_y, ball.get_width(), ball.get_height());
+        paddleBounds.setBounds(paddle.get_x(), paddle.get_y(), paddle.get_width(), paddle.get_height());
         // checking if the game is over(all bricks destroyed/0 life point).
         if(isGameOver()){
             timer.stop();
@@ -80,12 +82,12 @@ public class Gameplay implements KeyListener, ActionListener{
         else if(is_player_missed(ball_position_y)){
             ball.set_new_cor(Screen.window_width / 2, Screen.window_height / 2);
             screen.ball_label.setLocation(Screen.window_width / 2, Screen.window_height / 2);
-            screen.remove_HeartLabel(player.get_life_points() - 1);
-            player.lose_life_point();
+            // screen.remove_HeartLabel(player.get_life_points() - 1);
+            // player.lose_life_point();
         }
 
         // checking if the ball was hitting the paddle 
-        else if(new Rectangle(ball_position_x, ball_position_y, ball.get_width(), ball.get_height()).intersects(new Rectangle(paddle.get_x(), paddle.get_y(),paddle.get_width(), paddle.get_height()))){
+        else if(ballBounds.intersects(paddleBounds)){
             ball_position_y = ball_bounce_y(ball_position_y);
             ball.set_new_cor(ball_position_x, ball_position_y);
             sound_effect.play_collision_soundEffect();

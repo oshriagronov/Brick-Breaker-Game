@@ -10,8 +10,8 @@ public class Ball {
     private final int height = 53;
     private int x;
     private int y;
-    private int x_velocity = 3; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
-    private int y_velocity = 3; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
+    private int x_velocity = 1; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
+    private int y_velocity = 1; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
     private int moving_spped = 1; // The smaller number, the faster the ball movement will be(it's in timer.start()).
 
     public Ball(){
