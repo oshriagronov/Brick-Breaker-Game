@@ -9,10 +9,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
-
 import javax.swing.Timer;
 
 public class Gameplay implements KeyListener, ActionListener{
+    private GameEndListener gameEndListener;
     private Player player;
     private Screen screen;
     private SoundEffect sound_effect;
@@ -55,7 +55,10 @@ public class Gameplay implements KeyListener, ActionListener{
         miss_height = Screen.window_height - ball.get_height();
 
     }
-
+    // a listener when the game end and inform the gamemanger
+    public void setGameEndListener(GameEndListener listener) {
+        this.gameEndListener = listener;
+    }
 //## main section of the run.
     public void run(){        
         // the parameter "ball speed" it's milliseconds as int for the timer(it's just named speed).
@@ -78,36 +81,41 @@ public class Gameplay implements KeyListener, ActionListener{
             // check if the player missed the ball, if true the player will lose 1 life point
             if(is_player_missed(ball_position_y)){
                 ball.set_new_cor(Screen.window_width / 2, Screen.window_height / 2);
-                // screen.remove_HeartLabel(player.get_life_points() - 1);
-                // player.lose_life_point();
+                //**lose life points and end game mechanic, disabled for testing**
+                //screen.remove_HeartLabel(player.get_life_points() - 1);
+                //player.lose_life_point();
             }
             // checking if the ball was hitting the paddle 
             else if(ballBounds.intersects(paddleBounds)){
-                ball_bounce_y(ball_position_y);
-                sound_effect.play_collision_soundEffect();
+                ball_bounce_y();
+                //sound_effect.play_collision_soundEffect();
             }
             
             // Here we checking if the ball was hitting the bricks 
             else if(is_BrickCollision(ball_position_x)){
                 player.add_score();
                 screen.refresh_player_score(player.get_score());
-                sound_effect.play_brick_collision_soundEffect();
+                //sound_effect.play_brick_collision_soundEffect();
             }
             
             else if(ball_position_x >= ball_screen_collision_x || ball_position_x < 0){
-                ball_bounce_x(ball_position_x);
-                sound_effect.play_collision_soundEffect();
+                ball_bounce_x();
+                //sound_effect.play_collision_soundEffect();
             }
             else if(ball_position_y < 0){
-                ball_bounce_y(ball_position_y);
-                sound_effect.play_collision_soundEffect();
+                ball_bounce_y();
+                //sound_effect.play_collision_soundEffect();
             }
             ball_moving();
             // After all the checking conditions, we get the ball the new coordinates and the screen object will move the label "on the screen".
             screen.ball_label.setLocation(ball.get_x(), ball.get_y());
         }
-        else
+        else{
             timer.stop();
+            if (gameEndListener != null) {
+                gameEndListener.onGameEnd();
+            }
+        }
     }
 
 // ##Section of all Ball movement functions.
@@ -116,16 +124,12 @@ public class Gameplay implements KeyListener, ActionListener{
         ball.set_new_cor(ball.get_x() + ball_x_velocity, ball.get_y() + ball_y_velocity);
     }
     // the function make the x velocity negative/positive so the ball will bounce when hitting object at left or right part.
-    private int ball_bounce_x(int ball_position_x){
+    private void ball_bounce_x(){
         ball_x_velocity = ball_x_velocity * (-1);
-        ball_position_x += ball_x_velocity;
-        return ball_position_x;
     }
     // the function make the y velocity negative/positive so the ball will bounce when hitting object at upper or button part.
-    private int ball_bounce_y(int ball_position_y){
+    private void ball_bounce_y(){
         ball_y_velocity = ball_y_velocity * (-1);
-        ball_position_y += ball_y_velocity;
-        return ball_position_y;
     }
 
 // ## Section of all the collision related function.
@@ -137,11 +141,12 @@ public class Gameplay implements KeyListener, ActionListener{
             Rectangle brick_r = brick.get_rectangle_brick();
             if(ballBounds.intersects(brick_r)){
                 if(ballBounds.x + ballBounds.width <= brick_r.x || ballBounds.x + 1 >= brick_r.x + brick_r.width){
-                    ball.set_new_cor(ball_bounce_x(ball.get_x()), ball.get_y());
+                    ball_bounce_x();
                 }
                 else{
-                    ball.set_new_cor(ball.get_x(), ball_bounce_y(ball.get_y()));
+                    ball_bounce_y();
                 }
+                ball_moving();
                 screen.brick_destroy(brick_array.indexOf(brick));
                 brick_array.remove(brick);
                 return true;

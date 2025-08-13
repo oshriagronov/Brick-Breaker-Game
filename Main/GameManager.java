@@ -46,19 +46,16 @@ public class GameManager implements KeyListener{
 // ## main section.
     public static void main(String[] args) {
         GameManager gameManager = new GameManager();
-        gameManager.start();
+        gameManager.menu_screen();
     }
-
+    // starting screen before the gameplay start
+    public void menu_screen(){
+        screen.manu_screen();
+    }
 // ## game start section.  
     public void start(){
         //here we wait for the user to press any key to start the game.
         screen.manu_screen();
-        while(true){
-            if(key_pressed == true){
-                break;
-            }
-            System.out.println();
-        }
         screen.clear_screen();
         screen.removeKeyListener(this);
         // creating bricks with the necessary coordinates, that stored in array of brick object(with all the information needed to detect a ball collision with the brick).
@@ -76,30 +73,26 @@ public class GameManager implements KeyListener{
         screen.add_player_score(player.get_score());
         // here we creating the gameplay object to control the objects and basically let the game run.
         Gameplay gameplay = new Gameplay(player, screen, sound_effect, ball, paddle, brick_array);
+        // custom event listener that use callback to end the game when the player have 0 life points or broke all the bricks
+        gameplay.setGameEndListener(() -> {
+        if (player.get_life_points() == 0) {
+            screen.clear_screen();
+            screen.gameover_screen();
+        } else {
+            screen.clear_screen();
+            screen.wining_screen();
+        }});
         gameplay.run();
-        // this loop check if the user lose or win, depends on the number of life point the player have(0 == gameover, (0 < life points) == wining).
-        while(true){
-            System.out.println();
-            if(player.get_life_points() == 0 && !gameplay.is_gameInprogress()){
-                screen.clear_screen();
-                screen.gameover_screen();
-                break;
-            }
-
-            else if(player.get_life_points() != 0 && !gameplay.is_gameInprogress()){
-                screen.clear_screen();
-                screen.wining_screen();
-                break;
-            }
-        }
-        
     }
 
 // ## keys input section.
     // here we check if the user pressed any key(and then the user can start playing).
     @Override
     public void keyPressed(KeyEvent e) {
-        key_pressed = true; 
+        if(!key_pressed){
+            key_pressed = true;
+            start();
+        }
     }
 
     @Override
