@@ -4,6 +4,8 @@ import GameObjects.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -15,7 +17,7 @@ public class GameManager implements KeyListener{
     private SoundEffect sound_effect;
     private Paddle paddle;
     private Ball ball;
-    private Brick [] brick_array;
+    private List<Brick> brick_array;
     private int num_of_bricks;
     private int bricks_gap;
     private Player player;
@@ -36,7 +38,7 @@ public class GameManager implements KeyListener{
         player = new Player(life_points, score_points);
         // we do this calculation to check how much bricks we can add to the screen in one line.
         num_of_bricks = Screen.window_width / Brick.get_width();
-        brick_array = new Brick[num_of_bricks];
+        brick_array = new ArrayList<>();
         bricks_gap = ((Screen.window_width - (num_of_bricks * Brick.get_width())) / num_of_bricks) / 2;
         screen.addKeyListener(this);
     }
@@ -63,7 +65,7 @@ public class GameManager implements KeyListener{
         int x_brick_location = 0;
         for(int i = 0; i < num_of_bricks; i++){
             x_brick_location += bricks_gap;
-            brick_array[i] = new Brick(x_brick_location);
+            brick_array.add(new Brick(x_brick_location));
             x_brick_location += Brick.get_width() + bricks_gap;
         }
         // adding the objects to the screen that include: ball, paddle, bricks etc...

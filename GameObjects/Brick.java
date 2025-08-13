@@ -1,7 +1,7 @@
 package GameObjects;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
-public class Brick {
+public class Brick{
     private final static int width = 190;
     private final static int height = 50;
     private final static String iconPath = "assets/brick.png";
@@ -50,4 +50,20 @@ public class Brick {
     public static String get_iconPath(){
         return iconPath;
     }
+    @Override
+    public boolean equals(Object other){
+        if(other instanceof Brick){
+            Brick brick = (Brick)other;
+            if(x == brick.get_x() && y == brick.get_y()){
+                return true;
+            }
+        }
+        return false;        
+    }
+    @Override
+    public int hashCode(){
+        return x + y;
+    }
+
+
 }

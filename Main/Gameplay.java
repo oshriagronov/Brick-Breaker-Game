@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
+
 import javax.swing.Timer;
 
 public class Gameplay implements KeyListener, ActionListener{
@@ -16,7 +18,7 @@ public class Gameplay implements KeyListener, ActionListener{
     private SoundEffect sound_effect;
     private Paddle paddle;
     private Ball ball;
-    private Brick [] brick_array;
+    private List <Brick> brick_array;
     private Timer timer; // we use timer to make an interrupt every some amount of time to make the ball move and check for collisions.
     // ball basic values for calculating.
     private int ball_screen_collision_x; // the screen width edge that if the ball reach it, the ball will bounce.
@@ -31,7 +33,7 @@ public class Gameplay implements KeyListener, ActionListener{
     private Rectangle ballBounds = new Rectangle();
     private Rectangle paddleBounds = new Rectangle();
 // ## Gameplay constructor.
-    public Gameplay(Player player, Screen screen, SoundEffect sound_effect, Ball ball, Paddle paddle, Brick [] brick_array){
+    public Gameplay(Player player, Screen screen, SoundEffect sound_effect, Ball ball, Paddle paddle, List <Brick> brick_array){
         // get all objects related to Gameplay mechanic system.
         this.player = player;
         this.screen = screen;
@@ -131,8 +133,8 @@ public class Gameplay implements KeyListener, ActionListener{
     // the function check if ball was hitting one of the bricks.
     private boolean is_BrickCollision(int ball_position_x){
         ballBounds.setBounds(ball_position_x, ball.get_y(), ball.get_width(), ball.get_height());
-        for(int i = 0; i <= brick_array.length - 1; i++){
-            Rectangle brick_r = brick_array[i].get_rectangle_brick();
+        for(Brick brick: brick_array){
+            Rectangle brick_r = brick.get_rectangle_brick();
             if(ballBounds.intersects(brick_r)){
                 if(ballBounds.x + ballBounds.width <= brick_r.x || ballBounds.x + 1 >= brick_r.x + brick_r.width){
                     ball.set_new_cor(ball_bounce_x(ball.get_x()), ball.get_y());
@@ -140,16 +142,8 @@ public class Gameplay implements KeyListener, ActionListener{
                 else{
                     ball.set_new_cor(ball.get_x(), ball_bounce_y(ball.get_y()));
                 }
-                screen.brick_destroy(i);
-                int index = i;
-                Brick [] copy = new Brick[brick_array.length - 1];
-                for (int x = 0, j = 0; x < brick_array.length; x++) {
-                    if (x != index) {
-                        copy[j++] = brick_array[x];
-                    }
-                }
-                brick_array = new Brick [copy.length];
-                brick_array = copy;
+                screen.brick_destroy(brick_array.indexOf(brick));
+                brick_array.remove(brick);
                 return true;
             }
         }
@@ -161,7 +155,7 @@ public class Gameplay implements KeyListener, ActionListener{
     // Checking if the game is over(wining or losing).
     private boolean isGameOver(){
         // if it the last brick than the player won.
-        if( brick_array.length == 0){
+        if( brick_array.size() == 0){
             screen.brick_destroy(0);
             return true;
         }

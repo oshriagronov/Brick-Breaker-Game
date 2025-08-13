@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.List;
 
 public class Screen extends JFrame{
     // screen variables(basically the resolution).
@@ -83,11 +84,11 @@ public class Screen extends JFrame{
         background_label.repaint();
     }
     // add bricks to the screen and load array of brick labels as well.
-    public void addBricksLabels(Brick [] brick_array, int num_of_bricks){
+    public void addBricksLabels(List <Brick> brick_array, int num_of_bricks){
         this.brick_labels = new JLabel[num_of_bricks];
         for(int i = 0; i < num_of_bricks; i++){
-            JLabel brick_label = new JLabel(brick_array[i].get_icon(), JLabel.CENTER);
-            brick_label.setBounds(brick_array[i].get_x(), brick_array[i].get_y(), brick_array[i].get_width(), brick_array[i].get_height());
+            JLabel brick_label = new JLabel(brick_array.get(i).get_icon(), JLabel.CENTER);
+            brick_label.setBounds(brick_array.get(i).get_x(), brick_array.get(i).get_y(), Brick.get_width(), Brick.get_height());
             brick_labels[i] = brick_label;
             background_label.add(brick_labels[i]);
         }
@@ -130,7 +131,6 @@ public class Screen extends JFrame{
     }
 
     public void refresh_player_score(int score){
-        String score_string = "score:" + score;
         player_score.setText("score: " + score);
         background_label.revalidate(); 
         background_label.repaint();
