@@ -88,23 +88,23 @@ public class Gameplay implements KeyListener, ActionListener{
             // checking if the ball was hitting the paddle 
             else if(ballBounds.intersects(paddleBounds)){
                 ball_bounce_y();
-                //sound_effect.play_collision_soundEffect();
+                sound_effect.play_collision_soundEffect();
             }
             
             // Here we checking if the ball was hitting the bricks 
             else if(is_BrickCollision(ball_position_x)){
                 player.add_score();
                 screen.refresh_player_score(player.get_score());
-                //sound_effect.play_brick_collision_soundEffect();
+                sound_effect.play_brick_collision_soundEffect();
             }
             
             else if(ball_position_x >= ball_screen_collision_x || ball_position_x < 0){
                 ball_bounce_x();
-                //sound_effect.play_collision_soundEffect();
+                sound_effect.play_collision_soundEffect();
             }
             else if(ball_position_y < 0){
                 ball_bounce_y();
-                //sound_effect.play_collision_soundEffect();
+                sound_effect.play_collision_soundEffect();
             }
             ball_moving();
             // After all the checking conditions, we get the ball the new coordinates and the screen object will move the label "on the screen".

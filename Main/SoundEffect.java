@@ -36,13 +36,18 @@ public class SoundEffect {
 
     // play the regular collision sound effect.
     public void play_collision_soundEffect(){
+        if(collision_soundEffect.isRunning()){
+            collision_soundEffect.stop();
+        }
+        collision_soundEffect.setFramePosition(0);
         collision_soundEffect.start();
-        collision_soundEffect.setMicrosecondPosition(0);
     }
 
     // play the specific brick collision sound effect.
     public void play_brick_collision_soundEffect(){
-        brick_collision_soundEffect.start();
+        if(brick_collision_soundEffect.isRunning())
+            brick_collision_soundEffect.stop();
         brick_collision_soundEffect.setMicrosecondPosition(0);
+        brick_collision_soundEffect.start();
     }
 }
