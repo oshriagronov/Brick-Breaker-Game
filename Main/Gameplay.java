@@ -72,42 +72,40 @@ public class Gameplay implements KeyListener, ActionListener{
         ballBounds.setBounds(ball_position_x, ball_position_y, ball.get_width(), ball.get_height());
         paddleBounds.setBounds(paddle.get_x(), paddle.get_y(), paddle.get_width(), paddle.get_height());
         // checking if the game is over(all bricks destroyed/0 life point).
-        if(isGameOver()){
+        if(!isGameOver()){
+            // check if the player missed the ball, if true the player will lose 1 life point
+            if(is_player_missed(ball_position_y)){
+                ball.set_new_cor(Screen.window_width / 2, Screen.window_height / 2);
+                // screen.remove_HeartLabel(player.get_life_points() - 1);
+                // player.lose_life_point();
+            }
+            // checking if the ball was hitting the paddle 
+            else if(ballBounds.intersects(paddleBounds)){
+                ball_bounce_y(ball_position_y);
+                sound_effect.play_collision_soundEffect();
+            }
+            
+            // Here we checking if the ball was hitting the bricks 
+            else if(is_BrickCollision(ball_position_x)){
+                player.add_score();
+                screen.refresh_player_score(player.get_score());
+                sound_effect.play_brick_collision_soundEffect();
+            }
+            
+            else if(ball_position_x >= ball_screen_collision_x || ball_position_x < 0){
+                ball_bounce_x(ball_position_x);
+                sound_effect.play_collision_soundEffect();
+            }
+            else if(ball_position_y < 0){
+                ball_bounce_y(ball_position_y);
+                sound_effect.play_collision_soundEffect();
+            }
+            ball_moving();
+            // After all the checking conditions, we get the ball the new coordinates and the screen object will move the label "on the screen".
+            screen.ball_label.setLocation(ball.get_x(), ball.get_y());
+        }
+        else
             timer.stop();
-        }
-
-        // check if the player missed the ball, if true the player will lose 1 life point
-        else if(is_player_missed(ball_position_y)){
-            ball.set_new_cor(Screen.window_width / 2, Screen.window_height / 2);
-            screen.ball_label.setLocation(Screen.window_width / 2, Screen.window_height / 2);
-            // screen.remove_HeartLabel(player.get_life_points() - 1);
-            // player.lose_life_point();
-        }
-
-        // checking if the ball was hitting the paddle 
-        else if(ballBounds.intersects(paddleBounds)){
-            ball.set_new_cor(ball_position_x, ball_bounce_y(ball_position_y));
-            sound_effect.play_collision_soundEffect();
-        }
-
-        // Here we checking if the ball was hitting the bricks 
-        else if(is_BrickCollision(ball_position_x)){
-            player.add_score();
-            screen.refresh_player_score(player.get_score());
-            sound_effect.play_brick_collision_soundEffect();
-        }
-        
-        else if(ball_position_x >= ball_screen_collision_x || ball_position_x < 0){
-            ball.set_new_cor(ball_bounce_x(ball_position_x), ball_position_y);
-            sound_effect.play_collision_soundEffect();
-        }
-        else if(ball_position_y < 0){
-            ball.set_new_cor(ball_position_x, ball_bounce_y(ball_position_y));
-            sound_effect.play_collision_soundEffect();
-        }
-        ball_moving();
-        // After all the checking conditions, we get the ball the new coordinates and the screen object will move the label "on the screen".
-        screen.ball_label.setLocation(ball.get_x(), ball.get_y());
     }
 
 // ##Section of all Ball movement functions.
@@ -133,9 +131,8 @@ public class Gameplay implements KeyListener, ActionListener{
     // the function check if ball was hitting one of the bricks.
     private boolean is_BrickCollision(int ball_position_x){
         ballBounds.setBounds(ball_position_x, ball.get_y(), ball.get_width(), ball.get_height());
-        Rectangle brick_r;
         for(int i = 0; i <= brick_array.length - 1; i++){
-            brick_r = new Rectangle(brick_array[i].get_x(), brick_array[i].get_y(), brick_array[i].get_width(), brick_array[i].get_height());
+            Rectangle brick_r = brick_array[i].get_rectangle_brick();
             if(ballBounds.intersects(brick_r)){
                 if(ballBounds.x + ballBounds.width <= brick_r.x || ballBounds.x + 1 >= brick_r.x + brick_r.width){
                     ball.set_new_cor(ball_bounce_x(ball.get_x()), ball.get_y());
