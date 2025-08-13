@@ -26,7 +26,6 @@ public class Gameplay implements KeyListener, ActionListener{
     // paddle basic values for calculating.
     private int paddle_screen_left_limit; // the screen left edge that if the paddle will reach it, the paddle couldn't pass it.
     private int paddle_screen_right_limit; // the screen right edge that if the paddle will reach it, the paddle couldn't pass it.
-    private int paddle_moving_speed; // the speed that the paddle will move(right and left depend on what key you pressed).
     // the hegiht where the ball considered missed and the player will lose life point.
     private int miss_height;
     private Rectangle ballBounds = new Rectangle();
@@ -48,7 +47,6 @@ public class Gameplay implements KeyListener, ActionListener{
         // get the ball moving speeds in x,y(pixels)
         ball_x_velocity = ball.get_ball_x_velocity();
         ball_y_velocity = ball.get_ball_y_velocity();
-        paddle_moving_speed = paddle.get_moving_speed();
         // get the amount of time for every movement on screen("refresh")
         ball_moving_speed = ball.get_moving_speed();
         // calculating final values of hitting objects(or missing).
@@ -88,45 +86,34 @@ public class Gameplay implements KeyListener, ActionListener{
 
         // checking if the ball was hitting the paddle 
         else if(ballBounds.intersects(paddleBounds)){
-            ball_position_y = ball_bounce_y(ball_position_y);
-            ball.set_new_cor(ball_position_x, ball_position_y);
+            ball.set_new_cor(ball_position_x, ball_bounce_y(ball_position_y));
             sound_effect.play_collision_soundEffect();
         }
 
         // Here we checking if the ball was hitting the bricks 
         else if(is_BrickCollision(ball_position_x)){
-            sound_effect.play_brick_collision_soundEffect();
             player.add_score();
             screen.refresh_player_score(player.get_score());
+            sound_effect.play_brick_collision_soundEffect();
         }
         
-        // Here we checking if the ball was hitting the screen, if not the ball just move in same direction
-        else{
-            if(ball_position_x >= ball_screen_collision_x || ball_position_x < 0){
-                ball_position_x = ball_bounce_x(ball_position_x);
-                sound_effect.play_collision_soundEffect();
-                ball.set_new_cor(ball_position_x, ball_position_y);
-            }
-            else if(ball_position_y < 0){
-                ball_position_y = ball_bounce_y(ball_position_y);
-                sound_effect.play_collision_soundEffect();
-                ball.set_new_cor(ball_position_x, ball_position_y);
-            }
-            else{
-                ball_moving(ball_position_x, ball_position_y);
-            }
+        else if(ball_position_x >= ball_screen_collision_x || ball_position_x < 0){
+            ball.set_new_cor(ball_bounce_x(ball_position_x), ball_position_y);
+            sound_effect.play_collision_soundEffect();
         }
-
+        else if(ball_position_y < 0){
+            ball.set_new_cor(ball_position_x, ball_bounce_y(ball_position_y));
+            sound_effect.play_collision_soundEffect();
+        }
+        ball_moving();
         // After all the checking conditions, we get the ball the new coordinates and the screen object will move the label "on the screen".
         screen.ball_label.setLocation(ball.get_x(), ball.get_y());
     }
 
 // ##Section of all Ball movement functions.
     // the function give the ball new values to move at same direction.
-    private void ball_moving(int ball_position_x, int ball_position_y){
-        ball_position_x += ball_x_velocity;
-        ball_position_y += ball_y_velocity;
-        ball.set_new_cor(ball_position_x, ball_position_y);
+    private void ball_moving(){
+        ball.set_new_cor(ball.get_x() + ball_x_velocity, ball.get_y() + ball_y_velocity);
     }
     // the function make the x velocity negative/positive so the ball will bounce when hitting object at left or right part.
     private int ball_bounce_x(int ball_position_x){
@@ -145,12 +132,12 @@ public class Gameplay implements KeyListener, ActionListener{
 
     // the function check if ball was hitting one of the bricks.
     private boolean is_BrickCollision(int ball_position_x){
-        Rectangle ball_r = new Rectangle(ball_position_x, ball.get_y(), ball.get_width(), ball.get_height());
+        ballBounds.setBounds(ball_position_x, ball.get_y(), ball.get_width(), ball.get_height());
         Rectangle brick_r;
         for(int i = 0; i <= brick_array.length - 1; i++){
             brick_r = new Rectangle(brick_array[i].get_x(), brick_array[i].get_y(), brick_array[i].get_width(), brick_array[i].get_height());
-            if(ball_r.intersects(brick_r)){
-                if(ball_r.x + ball_r.width <= brick_r.x || ball_r.x + 1 >= brick_r.x + brick_r.width){
+            if(ballBounds.intersects(brick_r)){
+                if(ballBounds.x + ballBounds.width <= brick_r.x || ballBounds.x + 1 >= brick_r.x + brick_r.width){
                     ball.set_new_cor(ball_bounce_x(ball.get_x()), ball.get_y());
                 }
                 else{
@@ -214,12 +201,12 @@ public class Gameplay implements KeyListener, ActionListener{
         // 'a'/'A'/'<' key was pressed.
         int paddle_position_x = paddle.get_x();
         if(paddle_position_x > paddle_screen_left_limit && (key == 65 || key == 37)){
-            paddle.set_new_cor(paddle_position_x - paddle_moving_speed);
+            paddle.set_new_cor(paddle_position_x - paddle.get_moving_speed());
         }
 
         // 'd'/'D'/'>' key was pressed.
         else if((paddle_position_x < paddle_screen_right_limit) && (key == 68 || key == 39)){
-            paddle.set_new_cor(paddle_position_x + paddle_moving_speed);
+            paddle.set_new_cor(paddle_position_x + paddle.get_moving_speed());
         }
         screen.paddle_label.setLocation(paddle.get_x(), paddle.get_y());
     }
