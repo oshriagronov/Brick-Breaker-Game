@@ -7,8 +7,8 @@ public class Paddle{
     private final static String iconPath = "assets/paddle.png";
     private final int defult_x = (Screen.window_width / 2) - 100;
     private final int defult_y = Screen.window_height - 70;
-    private final int width = 210;
-    private final int height = 34;
+    private static final int WIDTH = 210;
+    private static final int HEIGHT = 34;
     private int x;
     private int y;
     private final int moving_speed = 20;
@@ -22,13 +22,13 @@ public class Paddle{
     }
 
     // the function return the paddle width(pixels).
-    public int get_width() {
-        return width;
+    public static int get_width() {
+        return WIDTH;
     }
 
     // the function return the paddle height(pixels).
-    public int get_height() {
-        return height;
+    public static int get_height() {
+        return HEIGHT;
     }
 
     // the function return the x point of the paddle at the moment.
@@ -42,7 +42,7 @@ public class Paddle{
     }
 
     // the function return the paddle icon as ImageIcon.
-    public ImageIcon get_icon(){
+    public static ImageIcon get_icon(){
         return paddle_icon;
     }
 

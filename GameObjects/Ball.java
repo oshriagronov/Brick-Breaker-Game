@@ -1,72 +1,73 @@
 package GameObjects;
-import Render.Screen;
 import javax.swing.ImageIcon;
 public class Ball {
-    private final int defult_x = Screen.window_width / 2;
-    private final int defult_y = Screen.window_height / 2;
-    private static ImageIcon ball_icon;
+    private static ImageIcon ballIcon;
     private final static String iconPath = "assets/ball.png";
-    private final int width = 53;
-    private final int height = 53;
+    private static final int WIDTH = 53;
+    private static final int HEIGHT = 53;
     private int x;
     private int y;
-    private int x_velocity = 1; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
-    private int y_velocity = 1; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
-    private int moving_spped = 1; // The smaller number, the faster the ball movement will be(it's in timer.start()).
+    private int xVelocity = 1; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
+    private int yVelocity = 1; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
+    private int speed = 1; // The smaller number, the faster the ball movement will be(it's in timer.start()).
 
-    public Ball(){
-        ball_icon = new ImageIcon(iconPath);
-        x = defult_x;
-        y = defult_y;
+    public Ball(int x, int y){
+        ballIcon = new ImageIcon(iconPath);
+        this.x = x;
+        this.y = y;
     }
 
     // the function return the ball width(pixels).
-    public int get_width() {
-        return width;
+    public static int getWidth() {
+        return WIDTH;
     }
 
     // the function return the ball height(pixels).
-    public int get_height() {
-        return height;
+    public static int getHeight() {
+        return HEIGHT;
     }
 
     // the function return the x point of the ball at the moment.
-    public int get_x(){
+    public int getX(){
         return x;
     }
 
     // the function return the y point of the ball at the moment.
-    public int get_y(){
+    public int getY(){
         return y;
     }
 
     // the function return the ball icon as ImageIcon.
-    public ImageIcon get_icon(){
-        return ball_icon;
+    public static ImageIcon getIcon(){
+        return ballIcon;
     }
 
     // the function return path of the icon image of the ball.
-    public static String get_iconPath(){
+    public static String getIconPath(){
         return iconPath;
     }
 
     // the function return ball x velocity(speed) in pixels as unit.
-    public int get_ball_x_velocity(){
-        return x_velocity;
+    public int getBallXVelocity(){
+        return xVelocity;
     }
-
+    public void setBallXVelocity(int xVelocity){
+        this.xVelocity = xVelocity;
+    }
     // the function return ball x velocity(speed) in pixels as unit.
-    public int get_ball_y_velocity(){
-        return y_velocity;
+    public int getBallYVelocity(){
+        return yVelocity;
     }
-
+    public void setBallYVelocity(int yVelocity){
+        this.yVelocity = yVelocity;
+    }
     // the function return "speed" of the ball but it more like the time the function will "refresh" and check the ball course(units in msec).
-    public int get_moving_speed(){
-        return moving_spped;
+    public int getBallSpeed(){
+        return speed;
     }
 
     // here the program give ball object updated x and y coordinates after calculation of moving/collision.
-    public void set_new_cor(int x, int y) {
+    public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }

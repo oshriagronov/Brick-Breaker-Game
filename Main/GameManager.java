@@ -13,6 +13,8 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class GameManager implements KeyListener{
+    private final int Ball_Default_X = Screen.window_width / 2;
+    private final int Ball_Default_Y = Screen.window_height / 2;
     private Screen screen;
     private SoundEffect sound_effect;
     private Paddle paddle;
@@ -24,7 +26,6 @@ public class GameManager implements KeyListener{
     private int life_points = 3; // number of tries the player have before loosing.
     private int score_points = 100; // the points the player get for every brick he break.
     private boolean key_pressed; // true == player pressed a key, false == player didn't pressed anything.
-
 // ## game manager constructor.
     public GameManager(){
         //the function check if all the needed files exists, if not a error window will popup.
@@ -34,7 +35,7 @@ public class GameManager implements KeyListener{
         // here we create all the needed objects.
         screen = new Screen();
         paddle = new Paddle();
-        ball = new Ball();
+        ball = new Ball(Ball_Default_X, Ball_Default_Y);
         player = new Player(life_points, score_points);
         // we do this calculation to check how much bricks we can add to the screen in one line.
         num_of_bricks = Screen.window_width / Brick.get_width();
@@ -66,8 +67,8 @@ public class GameManager implements KeyListener{
             x_brick_location += Brick.get_width() + bricks_gap;
         }
         // adding the objects to the screen that include: ball, paddle, bricks etc...
-        screen.addLabels("paddle", paddle.get_icon(), paddle.get_x(), paddle.get_y(), paddle.get_width(), paddle.get_height());
-        screen.addLabels("ball", ball.get_icon(), ball.get_x(), ball.get_y(), ball.get_width(), ball.get_height());
+        screen.addLabels("paddle", Paddle.get_icon(), paddle.get_x(), paddle.get_y(), Paddle.get_width(), Paddle.get_height());
+        screen.addLabels("ball", Ball.getIcon(), ball.getX(), ball.getY(), Ball.getWidth(), Ball.getHeight());
         screen.addHeartLabels(player.get_life_points(), player.get_heart_icon(), player.get_heart_x(), player.get_heart_y(), player.get_heart_width(), player.get_heart_height());
         screen.addBricksLabels(brick_array, num_of_bricks);
         screen.add_player_score(player.get_score());
@@ -115,7 +116,7 @@ public class GameManager implements KeyListener{
             new ErrorWindow("The paddle png path isn't correct or the file doesn't exists");
             return true;
         }
-        path = Paths.get(Ball.get_iconPath());
+        path = Paths.get(Ball.getIconPath());
         if(!Files.exists(path)){
             new ErrorWindow("The ball png path isn't correct or the file doesn't exists");
             return true;
