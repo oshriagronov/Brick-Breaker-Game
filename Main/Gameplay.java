@@ -35,9 +35,9 @@ public class Gameplay implements KeyListener, ActionListener{
 // ## Gameplay constructor.
     public Gameplay(Player player, Screen screen, SoundEffect sound_effect, Ball ball, Paddle paddle, List <Brick> brick_array){
         // get all objects related to Gameplay mechanic system.
+        screen.addKeyListener(this);
         this.player = player;
         this.screen = screen;
-        screen.addKeyListener(this);
         this.sound_effect = sound_effect;
         this.ball = ball;
         this.paddle = paddle;
@@ -87,21 +87,27 @@ public class Gameplay implements KeyListener, ActionListener{
             }
             // checking if the ball was hitting the paddle 
             else if(ballBounds.intersects(paddleBounds)){
-                ball_bounce_y();
+                Rectangle intersection = ballBounds.intersection(paddleBounds);
+                if(intersection.width < intersection.height)
+                    ball_bounce_x();
+                
+                else
+                    ball_bounce_y();
                 sound_effect.play_collision_soundEffect();
             }
             
-            // Here we checking if the ball was hitting the bricks 
+            // if the ball was hitting the brick
             else if(is_BrickCollision(ball_position_x)){
                 player.add_score();
                 screen.refresh_player_score(player.get_score());
                 sound_effect.play_brick_collision_soundEffect();
             }
-            
+            // if the  ball hitting the sides of the screen
             else if(ball_position_x >= ball_screen_collision_x || ball_position_x < 0){
                 ball_bounce_x();
                 sound_effect.play_collision_soundEffect();
             }
+            // if the ball hitting the top screen
             else if(ball_position_y < 0){
                 ball_bounce_y();
                 sound_effect.play_collision_soundEffect();
@@ -140,12 +146,12 @@ public class Gameplay implements KeyListener, ActionListener{
         for(Brick brick: brick_array){
             Rectangle brick_r = brick.get_rectangle_brick();
             if(ballBounds.intersects(brick_r)){
-                if(ballBounds.x + ballBounds.width <= brick_r.x || ballBounds.x + 1 >= brick_r.x + brick_r.width){
+                Rectangle intersection = ballBounds.intersection(brick_r);
+                if( intersection.width < intersection.height)
                     ball_bounce_x();
-                }
-                else{
+                
+                else
                     ball_bounce_y();
-                }
                 ball_moving();
                 screen.brick_destroy(brick_array.indexOf(brick));
                 brick_array.remove(brick);
