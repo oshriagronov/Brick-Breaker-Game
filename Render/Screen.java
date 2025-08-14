@@ -87,8 +87,8 @@ public class Screen extends JFrame{
     public void addBricksLabels(List <Brick> brick_array, int num_of_bricks){
         this.brick_labels = new JLabel[num_of_bricks];
         for(int i = 0; i < num_of_bricks; i++){
-            JLabel brick_label = new JLabel(brick_array.get(i).get_icon(), JLabel.CENTER);
-            brick_label.setBounds(brick_array.get(i).get_x(), brick_array.get(i).get_y(), Brick.get_width(), Brick.get_height());
+            JLabel brick_label = new JLabel(brick_array.get(i).getIcon(), JLabel.CENTER);
+            brick_label.setBounds(brick_array.get(i).getX(), brick_array.get(i).getY(), Brick.getWidth(), Brick.getHeight());
             brick_labels[i] = brick_label;
             background_label.add(brick_labels[i]);
         }

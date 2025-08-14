@@ -40,9 +40,9 @@ public class GameManager implements KeyListener{
         ball = new Ball(Ball_DEFAULT_X, BALL_DEFAULT_Y);
         player = new Player(life_points, score_points);
         // we do this calculation to check how much bricks we can add to the screen in one line.
-        num_of_bricks = Screen.window_width / Brick.get_width();
+        num_of_bricks = Screen.window_width / Brick.getWidth();
         brick_array = new ArrayList<>();
-        bricks_gap = ((Screen.window_width - (num_of_bricks * Brick.get_width())) / num_of_bricks) / 2;
+        bricks_gap = ((Screen.window_width - (num_of_bricks * Brick.getWidth())) / num_of_bricks) / 2;
         screen.addKeyListener(this);
     }
 
@@ -66,19 +66,19 @@ public class GameManager implements KeyListener{
         for(int i = 0; i < num_of_bricks; i++){
             x_brick_location += bricks_gap;
             brick_array.add(new Brick(x_brick_location));
-            x_brick_location += Brick.get_width() + bricks_gap;
+            x_brick_location += Brick.getWidth() + bricks_gap;
         }
         // adding the objects to the screen that include: ball, paddle, bricks etc...
         screen.addLabels("paddle", Paddle.getIcon(), paddle.getX(), paddle.getY(), Paddle.getWidth(), Paddle.getHeight());
         screen.addLabels("ball", Ball.getIcon(), ball.getX(), ball.getY(), Ball.getWidth(), Ball.getHeight());
-        screen.addHeartLabels(player.get_life_points(), player.get_heart_icon(), player.get_heart_x(), player.get_heart_y(), player.get_heart_width(), player.get_heart_height());
+        screen.addHeartLabels(player.getLifePoints(), player.getHeartIcon(), player.getHeartX(), player.getHeartY(), player.getHeartWidth(), player.getHeartHeight());
         screen.addBricksLabels(brick_array, num_of_bricks);
-        screen.add_player_score(player.get_score());
+        screen.add_player_score(player.getScore());
         // here we creating the gameplay object to control the objects and basically let the game run.
         Gameplay gameplay = new Gameplay(player, screen, sound_effect, ball, paddle, brick_array);
         // custom event listener that use callback to end the game when the player have 0 life points or broke all the bricks
         gameplay.setGameEndListener(() -> {
-        if (player.get_life_points() == 0) {
+        if (player.getLifePoints() == 0) {
             screen.clear_screen();
             screen.gameover_screen();
         } else {
@@ -123,12 +123,12 @@ public class GameManager implements KeyListener{
             new ErrorWindow("The ball png path isn't correct or the file doesn't exists");
             return true;
         }
-        path = Paths.get(Brick.get_iconPath());
+        path = Paths.get(Brick.getIconPath());
         if(!Files.exists(path)){
             new ErrorWindow("The bricks png path isn't correct or the file doesn't exists");
             return true;
         }
-        path = Paths.get(Player.get_heart_iconPath());
+        path = Paths.get(Player.getHeartIconPath());
         if(!Files.exists(path)){
             new ErrorWindow("The bricks png path isn't correct or the file doesn't exists");
             return true;

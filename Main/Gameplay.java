@@ -77,7 +77,6 @@ public class Gameplay implements KeyListener, ActionListener{
             }
         }
     }
-
 // ##Section of all Ball movement functions.
     // the function make the x velocity negative/positive so the ball will bounce when hitting object at left or right part.
     private void ballBounceX(){
@@ -93,23 +92,23 @@ public class Gameplay implements KeyListener, ActionListener{
         paddleBounds.setBounds(paddle.getX(), paddle.getY(), Paddle.getWidth(), Paddle.getHeight());
         // checking if the ball was hitting the paddle 
         if(objCollision(ballBounds, paddleBounds)){
-            soundEffect.play_collision_soundEffect();
+            soundEffect.playCollisionSoundEffect();
         }
         // if the ball was hitting the brick
         else if(isBrickCollision(ballBounds)){
-            player.add_score();
-            screen.refresh_player_score(player.get_score());
-            soundEffect.play_brick_collision_soundEffect();
+            player.addScore();
+            screen.refresh_player_score(player.getScore());
+            soundEffect.playBrickCollisionSoundEffect();
         }
         // if the  ball hitting the sides of the screen
         else if(ballBounds.getX() >= BALL_SCREEN_COLLISION_X || ballBounds.getX() < 0){
             ballBounceX();
-            soundEffect.play_collision_soundEffect();
+            soundEffect.playCollisionSoundEffect();
         }
         // if the ball hitting the top screen
         else if(ballBounds.getY() < 0){
             ballBounceY();
-            soundEffect.play_collision_soundEffect();
+            soundEffect.playCollisionSoundEffect();
         }
         ball.setPosition(ball.getX() + ball.getBallXVelocity(), ball.getY() + ball.getBallYVelocity());
         // After all the checking conditions, we get the ball the new coordinates and the screen object will move the label "on the screen".
@@ -129,7 +128,7 @@ public class Gameplay implements KeyListener, ActionListener{
     // the function check if ball was hitting one of the bricks.
     private boolean isBrickCollision(Rectangle ballBounds){
         for(Brick brick: brickArrayList)
-            if(objCollision(ballBounds, brick.get_rectangle_brick())){
+            if(objCollision(ballBounds, brick.getRectangleBrick())){
                 screen.brick_destroy(brickArrayList.indexOf(brick));
                 brickArrayList.remove(brick);
                 return true;
@@ -146,7 +145,7 @@ public class Gameplay implements KeyListener, ActionListener{
             return true;
         }
         // if the player lost all his life points.
-        else if(player.get_life_points() == 0){
+        else if(player.getLifePoints() == 0){
             return true;
         }
         else{
