@@ -13,8 +13,10 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class GameManager implements KeyListener{
-    private final int Ball_Default_X = Screen.window_width / 2;
-    private final int Ball_Default_Y = Screen.window_height / 2;
+    private final int Ball_DEFAULT_X = Screen.window_width / 2;
+    private final int BALL_DEFAULT_Y = Screen.window_height / 2;
+    private final int PADDLE_DEFAULT_X = (Screen.window_width / 2) - 100;;
+    private final int PADDLE_DEFAULT_Y = Screen.window_height - 70;
     private Screen screen;
     private SoundEffect sound_effect;
     private Paddle paddle;
@@ -34,8 +36,8 @@ public class GameManager implements KeyListener{
         }
         // here we create all the needed objects.
         screen = new Screen();
-        paddle = new Paddle();
-        ball = new Ball(Ball_Default_X, Ball_Default_Y);
+        paddle = new Paddle(PADDLE_DEFAULT_X, PADDLE_DEFAULT_Y);
+        ball = new Ball(Ball_DEFAULT_X, BALL_DEFAULT_Y);
         player = new Player(life_points, score_points);
         // we do this calculation to check how much bricks we can add to the screen in one line.
         num_of_bricks = Screen.window_width / Brick.get_width();
@@ -67,7 +69,7 @@ public class GameManager implements KeyListener{
             x_brick_location += Brick.get_width() + bricks_gap;
         }
         // adding the objects to the screen that include: ball, paddle, bricks etc...
-        screen.addLabels("paddle", Paddle.get_icon(), paddle.get_x(), paddle.get_y(), Paddle.get_width(), Paddle.get_height());
+        screen.addLabels("paddle", Paddle.getIcon(), paddle.getX(), paddle.getY(), Paddle.getWidth(), Paddle.getHeight());
         screen.addLabels("ball", Ball.getIcon(), ball.getX(), ball.getY(), Ball.getWidth(), Ball.getHeight());
         screen.addHeartLabels(player.get_life_points(), player.get_heart_icon(), player.get_heart_x(), player.get_heart_y(), player.get_heart_width(), player.get_heart_height());
         screen.addBricksLabels(brick_array, num_of_bricks);
@@ -111,7 +113,7 @@ public class GameManager implements KeyListener{
     // check if all the needed files exists.
     public boolean CheckPath(){
         Path path;
-        path = Paths.get(Paddle.get_iconPath());
+        path = Paths.get(Paddle.getIconPath());
         if(!Files.exists(path)){
             new ErrorWindow("The paddle png path isn't correct or the file doesn't exists");
             return true;

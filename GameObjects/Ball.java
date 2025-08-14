@@ -1,18 +1,18 @@
 package GameObjects;
 import javax.swing.ImageIcon;
 public class Ball {
-    private static ImageIcon ballIcon;
-    private final static String iconPath = "assets/ball.png";
+    private final int SPEED = 1; // The smaller number, the faster the ball movement will be(it's in timer.start()).
+    private static final String ICON_PATH = "assets/ball.png";
     private static final int WIDTH = 53;
     private static final int HEIGHT = 53;
+    private static ImageIcon ballIcon;
     private int x;
     private int y;
     private int xVelocity = 1; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
     private int yVelocity = 1; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
-    private int speed = 1; // The smaller number, the faster the ball movement will be(it's in timer.start()).
 
     public Ball(int x, int y){
-        ballIcon = new ImageIcon(iconPath);
+        ballIcon = new ImageIcon(ICON_PATH);
         this.x = x;
         this.y = y;
     }
@@ -44,7 +44,7 @@ public class Ball {
 
     // the function return path of the icon image of the ball.
     public static String getIconPath(){
-        return iconPath;
+        return ICON_PATH;
     }
 
     // the function return ball x velocity(speed) in pixels as unit.
@@ -63,7 +63,7 @@ public class Ball {
     }
     // the function return "speed" of the ball but it more like the time the function will "refresh" and check the ball course(units in msec).
     public int getBallSpeed(){
-        return speed;
+        return SPEED;
     }
 
     // here the program give ball object updated x and y coordinates after calculation of moving/collision.
