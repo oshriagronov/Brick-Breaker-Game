@@ -12,11 +12,11 @@ import java.util.List;
 import javax.swing.Timer;
 public class Gameplay implements KeyListener, ActionListener{
     // ball basic values for calculating.
-    private final int BALL_SCREEN_COLLISION_X = Screen.window_width - Ball.getWidth();; // the screen width edge that if the ball reach it, the ball will bounce.
+    private final int BALL_SCREEN_COLLISION_X = Screen.WINDOW_WIDTH - Ball.getWidth();; // the screen width edge that if the ball reach it, the ball will bounce.
     private final int PADDLE_SCREEN_LEFT_LIMIT = 0; // the screen left edge that if the paddle will reach it, the paddle couldn't pass it.
-    private final int PADDLE_SCREEN_RIGHT_LIMIT = Screen.window_width - Paddle.getWidth(); // the screen right edge that if the paddle will reach it, the paddle couldn't pass it.
+    private final int PADDLE_SCREEN_RIGHT_LIMIT = Screen.WINDOW_WIDTH - Paddle.getWidth(); // the screen right edge that if the paddle will reach it, the paddle couldn't pass it.
     // the height where the ball considered missed and the player will lose life point.
-    private final int MISS_HEIGHT = Screen.window_height - Ball.getHeight();
+    private final int MISS_HEIGHT = Screen.WINDOW_HEIGHT - Ball.getHeight();
     private GameEndListener gameEndListener;
     private Player player;
     private Screen screen;
@@ -62,7 +62,7 @@ public class Gameplay implements KeyListener, ActionListener{
         if(!isGameOver()){
             // check if the player missed the ball, if true the player will lose 1 life point
             if(ball.getY() > MISS_HEIGHT){
-                ball.setPosition(Screen.window_width / 2, Screen.window_height / 2);
+                ball.setPosition(Screen.WINDOW_WIDTH / 2, Screen.WINDOW_HEIGHT / 2);
                 //**lose life points and end game mechanic, disabled for testing**
                 //screen.remove_HeartLabel(player.get_life_points() - 1);
                 //player.lose_life_point();
@@ -97,7 +97,7 @@ public class Gameplay implements KeyListener, ActionListener{
         // if the ball was hitting the brick
         else if(isBrickCollision(ballBounds)){
             player.addScore();
-            screen.refresh_player_score(player.getScore());
+            screen.refreshPlayerScore(player.getScore());
             soundEffect.playBrickCollisionSoundEffect();
         }
         // if the  ball hitting the sides of the screen
@@ -112,7 +112,7 @@ public class Gameplay implements KeyListener, ActionListener{
         }
         ball.setPosition(ball.getX() + ball.getBallXVelocity(), ball.getY() + ball.getBallYVelocity());
         // After all the checking conditions, we get the ball the new coordinates and the screen object will move the label "on the screen".
-        screen.ball_label.setLocation(ball.getX(), ball.getY());
+        screen.ballLabel.setLocation(ball.getX(), ball.getY());
     }
     private boolean objCollision(Rectangle ballBounds, Rectangle obj){
             if(ballBounds.intersects(obj)){
@@ -129,7 +129,7 @@ public class Gameplay implements KeyListener, ActionListener{
     private boolean isBrickCollision(Rectangle ballBounds){
         for(Brick brick: brickArrayList)
             if(objCollision(ballBounds, brick.getRectangleBrick())){
-                screen.brick_destroy(brickArrayList.indexOf(brick));
+                screen.brickDestroy(brickArrayList.indexOf(brick));
                 brickArrayList.remove(brick);
                 return true;
             }
@@ -141,7 +141,7 @@ public class Gameplay implements KeyListener, ActionListener{
     private boolean isGameOver(){
         // if it the last brick than the player won.
         if( brickArrayList.size() == 0){
-            screen.brick_destroy(0);
+            screen.brickDestroy(0);
             return true;
         }
         // if the player lost all his life points.
@@ -167,7 +167,7 @@ public class Gameplay implements KeyListener, ActionListener{
         else if((paddlePositionX < PADDLE_SCREEN_RIGHT_LIMIT) && (key == 68 || key == 39)){
             paddle.setX(paddlePositionX + paddle.getPaddleSpeed());
         }
-        screen.paddle_label.setLocation(paddle.getX(), paddle.getY());
+        screen.paddleLabel.setLocation(paddle.getX(), paddle.getY());
     }
     // we don't use those methods because we don't any use with them, so i was let them be empty.
     @Override

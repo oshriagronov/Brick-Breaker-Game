@@ -13,10 +13,10 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class GameManager implements KeyListener{
-    private final int Ball_DEFAULT_X = Screen.window_width / 2;
-    private final int BALL_DEFAULT_Y = Screen.window_height / 2;
-    private final int PADDLE_DEFAULT_X = (Screen.window_width / 2) - 100;;
-    private final int PADDLE_DEFAULT_Y = Screen.window_height - 70;
+    private final int Ball_DEFAULT_X = Screen.WINDOW_WIDTH / 2;
+    private final int BALL_DEFAULT_Y = Screen.WINDOW_HEIGHT / 2;
+    private final int PADDLE_DEFAULT_X = (Screen.WINDOW_WIDTH / 2) - 100;;
+    private final int PADDLE_DEFAULT_Y = Screen.WINDOW_HEIGHT - 70;
     private Screen screen;
     private SoundEffect sound_effect;
     private Paddle paddle;
@@ -40,9 +40,9 @@ public class GameManager implements KeyListener{
         ball = new Ball(Ball_DEFAULT_X, BALL_DEFAULT_Y);
         player = new Player(life_points, score_points);
         // we do this calculation to check how much bricks we can add to the screen in one line.
-        num_of_bricks = Screen.window_width / Brick.getWidth();
+        num_of_bricks = Screen.WINDOW_WIDTH / Brick.getWidth();
         brick_array = new ArrayList<>();
-        bricks_gap = ((Screen.window_width - (num_of_bricks * Brick.getWidth())) / num_of_bricks) / 2;
+        bricks_gap = ((Screen.WINDOW_WIDTH - (num_of_bricks * Brick.getWidth())) / num_of_bricks) / 2;
         screen.addKeyListener(this);
     }
 
@@ -53,13 +53,13 @@ public class GameManager implements KeyListener{
     }
     // starting screen before the gameplay start
     public void menu_screen(){
-        screen.manu_screen();
+        screen.menuScreen();
     }
 // ## game start section.  
     public void start(){
         //here we wait for the user to press any key to start the game.
-        screen.manu_screen();
-        screen.clear_screen();
+        screen.menuScreen();
+        screen.clearScreen();
         screen.removeKeyListener(this);
         // creating bricks with the necessary coordinates, that stored in array of brick object(with all the information needed to detect a ball collision with the brick).
         int x_brick_location = 0;
@@ -73,17 +73,17 @@ public class GameManager implements KeyListener{
         screen.addLabels("ball", Ball.getIcon(), ball.getX(), ball.getY(), Ball.getWidth(), Ball.getHeight());
         screen.addHeartLabels(player.getLifePoints(), player.getHeartIcon(), player.getHeartX(), player.getHeartY(), player.getHeartWidth(), player.getHeartHeight());
         screen.addBricksLabels(brick_array, num_of_bricks);
-        screen.add_player_score(player.getScore());
+        screen.addPlayerScore(player.getScore());
         // here we creating the gameplay object to control the objects and basically let the game run.
         Gameplay gameplay = new Gameplay(player, screen, sound_effect, ball, paddle, brick_array);
         // custom event listener that use callback to end the game when the player have 0 life points or broke all the bricks
         gameplay.setGameEndListener(() -> {
         if (player.getLifePoints() == 0) {
-            screen.clear_screen();
-            screen.gameover_screen();
+            screen.clearScreen();
+            screen.gameOverScreen();
         } else {
-            screen.clear_screen();
-            screen.wining_screen();
+            screen.clearScreen();
+            screen.winingScreen();
         }});
         gameplay.run();
     }
