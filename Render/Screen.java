@@ -7,17 +7,27 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
+
+/**
+ * The Screen class represents the main game window.
+ * It extends JFrame and is responsible for rendering all visual elements,
+ * including the background, game objects (paddle, ball, bricks), UI elements (score, lives),
+ * and various game state screens (menu, win, game over).
+ */
 public class Screen extends JFrame{
-    // screen variables(basically the resolution).
+    /** The height of the game window in pixels. */
     public final static int WINDOW_HEIGHT = 720;
+    /** The width of the game window in pixels. */
     public final static int WINDOW_WIDTH = 1280;
-    // Icon variables
-    private final String ICON_PATH = AssetPaths.ICON_PATH;
-    private final String BACKGROUND_PATH = AssetPaths.BACKGROUND_PATH;
-    private final String MENU_ICON_PATH = AssetPaths.MENU_ICON_PATH;
-    private final String WINING_ICON_PATH = AssetPaths.WINING_ICON_PATH;
-    private final String GAME_OVER_ICON_PATH = AssetPaths.GAME_OVER_ICON_PATH;
-    // Labels variables
+
+    // Asset paths for icons and backgrounds.
+    private final String ICON_PATH = "assets/icon.jpeg";
+    private final String BACKGROUND_PATH = "assets/DARK_BG2_small.jpeg";
+    private final String MENU_ICON_PATH = "assets/brick breaker menu.png";
+    private final String WINING_ICON_PATH = "assets/wining logo.png";
+    private final String GAME_OVER_ICON_PATH = "assets/gameover logo.png";
+
+    // JLabels used to display game elements.
     public JLabel paddleLabel;
     public JLabel ballLabel;
     private JLabel backgroundLabel;
@@ -27,28 +37,31 @@ public class Screen extends JFrame{
     private JLabel menuLogoLabel;
     private JLabel winingLogoLabel;
     private JLabel gameOverLogoLabel;
-// ## screen constructor.
+
+    /**
+     * Constructs the main game screen (JFrame).
+     * Initializes window properties, sets the background, and makes the window visible.
+     */
     public Screen(){
-        //  start the basic screen.
         this.setTitle("Brick Breaker");
-        ImageIcon icon = new ImageIcon(ICON_PATH);
-        this.setIconImage(icon.getImage());
+        this.setIconImage(new ImageIcon(ICON_PATH).getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
-        // setting a label as a background to the game.
-        backgroundLabel = new JLabel();
-        backgroundLabel.setIcon(new ImageIcon(BACKGROUND_PATH));
+
+        // Use a JLabel to display the background image.
+        backgroundLabel = new JLabel(new ImageIcon(BACKGROUND_PATH));
         backgroundLabel.setLayout(null);
         backgroundLabel.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        // here we adding the background label to the jframe panel.
         this.add(backgroundLabel);
         this.setVisible(true);
     }
-// ## the start menu screen
-    //the function print the logo and text, waiting for user input to start the game.
+
+    /**
+     * Displays the main menu screen with the game logo and a prompt to start.
+     */
     public void menuScreen(){
         menuLogoLabel = new JLabel(new ImageIcon(MENU_ICON_PATH));
         menuLogoLabel.setBounds((WINDOW_WIDTH / 2) - 400, 0, 800, 279);
@@ -62,26 +75,39 @@ public class Screen extends JFrame{
         backgroundLabel.repaint();
     }
 
-// ## add/remove/update labels section.
-    // the function add labels of ball or paddle, as the user ask.
+    /**
+     * Adds a JLabel for the paddle or ball to the screen.
+     * Suggestion: Refactor this to have separate methods like `addPaddleLabel` and `addBallLabel`
+     * to avoid using a String switch, which is less type-safe.
+     * @param name "paddle" or "ball"
+     * @param icon The icon for the label.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param width The width of the label.
+     * @param height The height of the label.
+     */
     public void addLabels(String name,ImageIcon icon, int x, int y, int width, int height){
         switch(name){
             case "paddle":
-            paddleLabel = new JLabel(icon, JLabel.CENTER);
-            paddleLabel.setBounds(x, y, width, height);
-            backgroundLabel.add(paddleLabel);
-            break;
-
+                paddleLabel = new JLabel(icon, JLabel.CENTER);
+                paddleLabel.setBounds(x, y, width, height);
+                backgroundLabel.add(paddleLabel);
+                break;
             case "ball":
-            ballLabel = new JLabel(icon, JLabel.CENTER);
-            ballLabel.setBounds(x, y, width, height);
-            backgroundLabel.add(ballLabel);
-            break;
+                ballLabel = new JLabel(icon, JLabel.CENTER);
+                ballLabel.setBounds(x, y, width, height);
+                backgroundLabel.add(ballLabel);
+                break;
         }
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
     }
-    // add bricks to the screen and load array of brick labels as well.
+
+    /**
+     * Creates and adds JLabels for all bricks to the screen.
+     * @param brick_array The list of Brick objects.
+     * @param numOfBricks The total number of bricks.
+     */
     public void addBricksLabels(List <Brick> brick_array, int numOfBricks){
         this.brickLabels = new JLabel[numOfBricks];
         for(int i = 0; i < numOfBricks; i++){
@@ -93,30 +119,35 @@ public class Screen extends JFrame{
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
     }
-    // the function remove the brick that got hit, and also remove it from the array of the label bricks.
+
+    /**
+     * Removes a brick's JLabel from the screen after it has been destroyed.
+     * Suggestion: The array copying logic is inefficient. Consider using a List<JLabel> for `brickLabels`
+     * which would make removal much simpler (`brickLabels.remove(brickIndex)`).
+     * @param brickIndex The index of the brick to remove.
+     */
     public void brickDestroy(int brickIndex){
         backgroundLabel.remove(brickLabels[brickIndex]);
-        // if it's the last brick there no need to copy the array minus 1, because the game is over.
+
         if(brickLabels.length == 1){
-            backgroundLabel.revalidate(); 
-            backgroundLabel.repaint();
-        }
-        // if it's not the last brick than we need to copy the new array minus the brick that got hit and destroyed, so we keep on track of the amount of bricks.
-        else{
+            // No need to copy if it's the last brick.
+        } else {
             JLabel [] copy = new JLabel[brickLabels.length - 1];
-            for (int x = 0, j = 0; x < brickLabels.length; x++) {
-                if (x != brickIndex) {
-                    copy[j++] = brickLabels[x];
+            for (int i = 0, k = 0; i < brickLabels.length; i++) {
+                if (i != brickIndex) {
+                    copy[k++] = brickLabels[i];
                 }
             }
-            brickLabels = new JLabel [copy.length - 1];
             brickLabels = copy;
-            backgroundLabel.revalidate(); 
-            backgroundLabel.repaint();
         }
+        backgroundLabel.revalidate();
+        backgroundLabel.repaint();
     }
 
-    // the function add the player score to the background.
+    /**
+     * Adds the player's score display to the screen.
+     * @param score The initial score to display.
+     */
     public void addPlayerScore(int score){
         playerScore = new JLabel("score: " + score);
         playerScore.setBounds(25, WINDOW_HEIGHT - 100, 200, 100);
@@ -127,33 +158,47 @@ public class Screen extends JFrame{
         backgroundLabel.repaint();
     }
 
+    /**
+     * Refreshes the score display with the current score.
+     * @param score The new score to display.
+     */
     public void refreshPlayerScore(int score){
         playerScore.setText("score: " + score);
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
     }
 
-    // the function create array load with heart icon(the number is in object player), and add them to the background.
+    /**
+     * Adds the heart icons to the screen to represent the player's lives.
+     * @param numOfTries The number of lives the player has.
+     * @param icon The heart icon.
+     * @param x The base x-coordinate for the first heart.
+     * @param y The y-coordinate for the hearts.
+     * @param width The width of a heart icon.
+     * @param height The height of a heart icon.
+     */
     public void addHeartLabels(int numOfTries, ImageIcon icon, int x, int y, int width, int height){
         heartLabels = new JLabel [numOfTries];
-        // making array of heart labels to manage life point of the player and represent them on screen.
         for(int i = 0; i < numOfTries; i++){
             heartLabels[i] = new JLabel(icon,JLabel.CENTER);
-            heartLabels[i].setBounds((x * i), y, width, height);
+            heartLabels[i].setBounds((x * i), y, width, height); // Hearts are placed side-by-side.
             backgroundLabel.add(heartLabels[i]);
         }
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
     }
-    // the function remove one heart label from the background at every call of the function.
+
+    /**
+     * Removes a heart icon from the screen when the player loses a life.
+     * @param num The index of the heart label to remove.
+     */
     public void removeHeartLabel(int num){
         backgroundLabel.remove(heartLabels[num]);
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
     }
 
-// ## other screens functions, wining/losing/clear.
-    // if the user wining, the function print a logo of "wining".
+    /** Displays the winning screen. */
     public void winingScreen(){
         winingLogoLabel = new JLabel(new ImageIcon(WINING_ICON_PATH));
         winingLogoLabel.setBounds((WINDOW_WIDTH / 2) - 235, 100, 500, 435);
@@ -161,7 +206,8 @@ public class Screen extends JFrame{
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
     }
-    // if the user lose, the function print a logo of "Game over"
+
+    /** Displays the game over screen. */
     public void gameOverScreen(){
         gameOverLogoLabel = new JLabel(new ImageIcon(GAME_OVER_ICON_PATH));
         gameOverLogoLabel.setBounds((WINDOW_WIDTH / 2) - 275, 0, 623, 580);
@@ -170,7 +216,10 @@ public class Screen extends JFrame{
         backgroundLabel.repaint();
     }
 
-    // general function of clear the screen of all labels, empty screen with background.
+    /**
+     * Clears all dynamic labels (like ball, paddle, bricks) from the screen,
+     * typically used when transitioning between game states.
+     */
     public void clearScreen(){
         backgroundLabel.removeAll();
         backgroundLabel.revalidate(); 

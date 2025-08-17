@@ -1,60 +1,95 @@
 package GameObjects;
 import javax.swing.ImageIcon;
-
-import Render.AssetPaths;
+/**
+ * The Paddle class represents the player's paddle in the game.
+ * It manages the paddle's position, dimensions, speed, and icon.
+ */
 public class Paddle{
     private static final String ICON_PATH = AssetPaths.PADDLE_ICON_PATH;
     private static final int WIDTH = 210;
     private static final int HEIGHT = 34;
+    /**
+     * The speed at which the paddle moves horizontally.
+     * Suggestion: Consider if this speed should be configurable, for example, through a settings file or difficulty levels.
+     */
     private final int SPEED = 20;
     private static ImageIcon paddleIcon;
     private int x;
     private int y;
-    // paddle constructor.
+
+    /**
+     * Constructs a new Paddle at the specified initial position.
+     * @param x The initial x-coordinate of the paddle.
+     * @param y The initial y-coordinate of the paddle.
+     */
     public Paddle(int x, int y){
         paddleIcon = new ImageIcon(ICON_PATH);
         this.x = x;
         this.y = y;
     }
 
-    // the function return the paddle width(pixels).
+    /**
+     * Returns the width of the paddle in pixels.
+     * @return The paddle's width.
+     */
     public static int getWidth() {
         return WIDTH;
     }
 
-    // the function return the paddle height(pixels).
+    /**
+     * Returns the height of the paddle in pixels.
+     * @return The paddle's height.
+     */
     public static int getHeight() {
         return HEIGHT;
     }
 
-    // the function return the x point of the paddle at the moment.
+    /**
+     * Returns the current x-coordinate of the paddle.
+     * @return The paddle's x-coordinate.
+     */
     public int getX(){
         return x;
     }
     
-    // here the program give paddle object updated x coordinates after calculation of moving.
+    /**
+     * Updates the x-coordinate of the paddle. This is used to move the paddle
+     * based on player input.
+     * @param x The new x-coordinate for the paddle.
+     */
     public void setX(int x) {
         this.x = x;
     }
-    // the function return the y point of the paddle at the moment.
+
+    /**
+     * Returns the current y-coordinate of the paddle.
+     * @return The paddle's y-coordinate.
+     */
     public int getY(){
         return y;
     }
 
-    // the function return the paddle icon as ImageIcon.
+    /**
+     * Returns the icon for the paddle.
+     * @return The paddle's ImageIcon.
+     */
     public static ImageIcon getIcon(){
         return paddleIcon;
     }
 
-    // the function return the ball icon path(string).
+    /**
+     * Returns the path to the paddle's icon image.
+     * @return The file path of the paddle's icon.
+     */
     public static String getIconPath(){
         return ICON_PATH;
     }
 
-    // the function return moving speed of the paddle(pixel unit).
+    /**
+     * Returns the moving speed of the paddle in pixels per key press.
+     * @return The paddle's speed.
+     */
     public int getPaddleSpeed(){
         return SPEED;
     }
-
-
 }

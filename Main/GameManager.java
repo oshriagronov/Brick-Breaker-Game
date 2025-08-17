@@ -12,10 +12,20 @@ import java.io.IOException;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * The GameManager class is the central component of the game.
+ * It is responsible for initializing the game objects, managing the game state,
+ * handling user input, and coordinating the overall game flow from the menu to the game's end.
+ *
+ * Suggestion: Consider creating a dedicated GameState enum (e.g., MENU, PLAYING, GAME_OVER)
+ * to manage the state transitions more explicitly, rather than relying on boolean flags like `key_pressed`.
+ */
 public class GameManager implements KeyListener{
     private final int Ball_DEFAULT_X = Screen.WINDOW_WIDTH / 2;
     private final int BALL_DEFAULT_Y = Screen.WINDOW_HEIGHT / 2;
-    private final int PADDLE_DEFAULT_X = (Screen.WINDOW_WIDTH / 2) - 100;;
+    // Suggestion: Avoid magic numbers. The paddle's default X should be calculated based on its width,
+    // e.g., `(Screen.WINDOW_WIDTH / 2) - (Paddle.getWidth() / 2)`.
+    private final int PADDLE_DEFAULT_X = (Screen.WINDOW_WIDTH / 2) - 100;
     private final int PADDLE_DEFAULT_Y = Screen.WINDOW_HEIGHT - 70;
     private Screen screen;
     private SoundEffect sound_effect;
@@ -25,58 +35,79 @@ public class GameManager implements KeyListener{
     private int num_of_bricks;
     private int bricks_gap;
     private Player player;
-    private int life_points = 3; // number of tries the player have before loosing.
-    private int score_points = 100; // the points the player get for every brick he break.
-    private boolean key_pressed; // true == player pressed a key, false == player didn't pressed anything.
-// ## game manager constructor.
+    /** The number of lives the player has before the game is over. */
+    private int life_points = 3;
+    /** The points awarded for breaking a single brick. */
+    private int score_points = 100;
+    /** Tracks if a key has been pressed to start the game from the menu. */
+    private boolean key_pressed;
+
+    /**
+     * Constructs a GameManager, initializing all game components.
+     * It performs a pre-launch check for necessary asset files and exits if any are missing.
+     * It sets up the screen, game objects (paddle, ball, player), and calculates brick layout.
+     */
     public GameManager(){
-        //the function check if all the needed files exists, if not a error window will popup.
+        // Checks for the existence of all required game assets. If any are missing,
+        // an error window is shown, and the constructor returns early.
         if(CheckPath()){
             return;
         }
-        // here we create all the needed objects.
+        // Initialize core game components.
         screen = new Screen();
         paddle = new Paddle(PADDLE_DEFAULT_X, PADDLE_DEFAULT_Y);
         ball = new Ball(Ball_DEFAULT_X, BALL_DEFAULT_Y);
         player = new Player(life_points, score_points);
-        // we do this calculation to check how much bricks we can add to the screen in one line.
+        // Calculate how many bricks can fit in a single row across the screen width.
         num_of_bricks = Screen.WINDOW_WIDTH / Brick.getWidth();
         brick_array = new ArrayList<>();
         bricks_gap = ((Screen.WINDOW_WIDTH - (num_of_bricks * Brick.getWidth())) / num_of_bricks) / 2;
         screen.addKeyListener(this);
     }
 
-// ## main section.
+    /**
+     * The main entry point of the application.
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         GameManager gameManager = new GameManager();
         gameManager.menu_screen();
     }
-    // starting screen before the gameplay start
+
+    /**
+     * Displays the initial menu screen, waiting for player input to start the game.
+     */
     public void menu_screen(){
         screen.menuScreen();
     }
-// ## game start section.  
+
+    /**
+     * Starts the main gameplay loop. This method is called once the player
+     * initiates the game from the menu. It sets up the game level by creating bricks,
+     * adding all game objects to the screen, and starting the Gameplay timer.
+     */
     public void start(){
-        //here we wait for the user to press any key to start the game.
-        screen.menuScreen();
         screen.clearScreen();
-        screen.removeKeyListener(this);
-        // creating bricks with the necessary coordinates, that stored in array of brick object(with all the information needed to detect a ball collision with the brick).
+        screen.removeKeyListener(this); // Remove this listener to pass control to Gameplay's listener.
+
+        // Create a row of bricks and add them to the brick list.
         int x_brick_location = 0;
         for(int i = 0; i < num_of_bricks; i++){
             x_brick_location += bricks_gap;
             brick_array.add(new Brick(x_brick_location));
             x_brick_location += Brick.getWidth() + bricks_gap;
         }
-        // adding the objects to the screen that include: ball, paddle, bricks etc...
+        // Render all game objects on the screen.
         screen.addLabels("paddle", Paddle.getIcon(), paddle.getX(), paddle.getY(), Paddle.getWidth(), Paddle.getHeight());
         screen.addLabels("ball", Ball.getIcon(), ball.getX(), ball.getY(), Ball.getWidth(), Ball.getHeight());
         screen.addHeartLabels(player.getLifePoints(), player.getHeartIcon(), player.getHeartX(), player.getHeartY(), player.getHeartWidth(), player.getHeartHeight());
         screen.addBricksLabels(brick_array, num_of_bricks);
         screen.addPlayerScore(player.getScore());
-        // here we creating the gameplay object to control the objects and basically let the game run.
+
+        // Initialize and run the core gameplay logic.
         Gameplay gameplay = new Gameplay(player, screen, sound_effect, ball, paddle, brick_array);
-        // custom event listener that use callback to end the game when the player have 0 life points or broke all the bricks
+
+        // Set up a listener to handle game-end conditions (win or lose).
         gameplay.setGameEndListener(() -> {
         if (player.getLifePoints() == 0) {
             screen.clearScreen();
@@ -88,8 +119,11 @@ public class GameManager implements KeyListener{
         gameplay.run();
     }
 
-// ## keys input section.
-    // here we check if the user pressed any key(and then the user can start playing).
+    /**
+     * Invoked when a key has been pressed. Used here to detect the first key press
+     * on the menu screen to start the game.
+     * @param e The KeyEvent generated by the key press.
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if(!key_pressed){
@@ -100,54 +134,53 @@ public class GameManager implements KeyListener{
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
+        // Intentionally left empty.
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
+        // Intentionally left empty.
     }
 
-// ## possible errors checking.
-
-    // check if all the needed files exists.
+    /**
+     * Verifies the existence of all required asset files (images and sounds).
+     * If a file is not found, it displays an error window.
+     * Suggestion: This method could be improved to report all missing files at once
+     * instead of stopping at the first one.
+     * @return true if an error occurred (e.g., a file is missing), false otherwise.
+     */
     public boolean CheckPath(){
-        Path path;
-        path = Paths.get(Paddle.getIconPath());
-        if(!Files.exists(path)){
-            new ErrorWindow("The paddle png path isn't correct or the file doesn't exists");
+        // Check for image assets.
+        if(!Files.exists(Paths.get(Paddle.getIconPath()))){
+            new ErrorWindow("The paddle PNG file is missing from the assets folder.");
             return true;
         }
-        path = Paths.get(Ball.getIconPath());
-        if(!Files.exists(path)){
-            new ErrorWindow("The ball png path isn't correct or the file doesn't exists");
+        if(!Files.exists(Paths.get(Ball.getIconPath()))){
+            new ErrorWindow("The ball PNG file is missing from the assets folder.");
             return true;
         }
-        path = Paths.get(Brick.getIconPath());
-        if(!Files.exists(path)){
-            new ErrorWindow("The bricks png path isn't correct or the file doesn't exists");
+        if(!Files.exists(Paths.get(Brick.getIconPath()))){
+            new ErrorWindow("The brick PNG file is missing from the assets folder.");
             return true;
         }
-        path = Paths.get(Player.getHeartIconPath());
-        if(!Files.exists(path)){
-            new ErrorWindow("The bricks png path isn't correct or the file doesn't exists");
+        if(!Files.exists(Paths.get(Player.getHeartIconPath()))){
+            new ErrorWindow("The heart PNG file is missing from the assets folder.");
             return true;
         }
-        // sound effect try and catch section, need to add popup error if the files does'nt found.
+        // Check for sound assets.
+        // Suggestion: For better debugging, log the stack trace (e.g., e.printStackTrace())
+        // in the catch blocks in addition to showing an error window.
         try {
             sound_effect = new SoundEffect();
         } catch (LineUnavailableException e) {
-            // TODO Auto-generated catch block
-            //e.printStackTrace();
-            new ErrorWindow("Something went wrong.");
+            new ErrorWindow("Audio line is unavailable. The sound device may be in use.");
+            return true;
         } catch (UnsupportedAudioFileException e) {
-            // TODO Auto-generated catch block
-            //e.printStackTrace();
-            new ErrorWindow("The one of the audio files is unsupported!");
+            new ErrorWindow("One or more audio files are in an unsupported format.");
+            return true;
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            //e.printStackTrace();
-            new ErrorWindow("The audio file path isn't correct or the file not founded");
+            new ErrorWindow("An audio file is missing or cannot be read from the assets folder.");
+            return true;
         }
         return false;
     }

@@ -7,26 +7,41 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import Render.AssetPaths;
+/**
+ * The SoundEffect class is responsible for loading and playing all sound effects used in the game.
+ * It pre-loads audio clips for collisions to ensure they can be played without delay.
+ */
 public class SoundEffect {
-    private String COLLISION_SOUND_EFFECT_FILE_PATH = AssetPaths.COLLISION_SOUND_EFFECT_FILE_PATH;
-    private String BRICK_COLLISION_SOUND_EFFECT_FILE_PATH = AssetPaths.BRICK_COLLISION_SOUND_EFFECT_FILE_PATH;
-    Clip collisionSoundEffect;
-    Clip brickCollisionSoundEffect;
+    // Suggestion: These file paths could be made `private static final` as they are constants.
+    private String COLLISION_SOUND_EFFECT_FILE_PATH = "assets/Bubble5_4.wav";
+    private String BRICK_COLLISION_SOUND_EFFECT_FILE_PATH = "assets/blop_cut_silenced.wav";
+    private Clip collisionSoundEffect;
+    private Clip brickCollisionSoundEffect;
 
+    /**
+     * Constructs a SoundEffect object and loads all the necessary audio files into memory.
+     * @throws LineUnavailableException if a clip cannot be obtained due to resource restrictions.
+     * @throws IOException if an I/O error occurs when reading the audio file.
+     * @throws UnsupportedAudioFileException if the audio file format is not supported.
+     */
     public SoundEffect() throws LineUnavailableException, IOException, UnsupportedAudioFileException{
-        // load the regular collision sound effect.
+        // Load the sound effect for general collisions (e.g., ball with paddle or walls).
         File collisionSoundEffectFile = new File(COLLISION_SOUND_EFFECT_FILE_PATH);
 		AudioInputStream audioStream = AudioSystem.getAudioInputStream(collisionSoundEffectFile);
 		collisionSoundEffect = AudioSystem.getClip();
 		collisionSoundEffect.open(audioStream);
-        //load the brick collision sound effect.
+
+        // Load the sound effect for when the ball collides with a brick.
         File brickCollisionSoundEffectFile = new File(BRICK_COLLISION_SOUND_EFFECT_FILE_PATH);
 		AudioInputStream brickAudioStream = AudioSystem.getAudioInputStream(brickCollisionSoundEffectFile);
 		brickCollisionSoundEffect = AudioSystem.getClip();
 		brickCollisionSoundEffect.open(brickAudioStream);
     }
-    // close everything that is running
+
+    /**
+     * Stops and closes the audio clips to release system resources.
+     * This should be called when the game is shutting down.
+     */
     public void close(){
         collisionSoundEffect.stop();
         collisionSoundEffect.close();
@@ -34,7 +49,10 @@ public class SoundEffect {
         brickCollisionSoundEffect.close();
     }
 
-    // play the regular collision sound effect.
+    /**
+     * Plays the standard collision sound effect from the beginning.
+     * If the clip is already playing, it is stopped and reset before playing again.
+     */
     public void playCollisionSoundEffect(){
         if(collisionSoundEffect.isRunning())
             collisionSoundEffect.stop();
@@ -42,7 +60,10 @@ public class SoundEffect {
         collisionSoundEffect.start();
     }
 
-    // play the specific brick collision sound effect.
+    /**
+     * Plays the brick collision sound effect from the beginning.
+     * If the clip is already playing, it is stopped and reset before playing again.
+     */
     public void playBrickCollisionSoundEffect(){
         if(brickCollisionSoundEffect.isRunning())
             brickCollisionSoundEffect.stop();
