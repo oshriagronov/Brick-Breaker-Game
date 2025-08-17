@@ -1,72 +1,136 @@
 package GameObjects;
-import Render.Screen;
 import javax.swing.ImageIcon;
+/**
+ * The Ball class represents the ball object in the game.
+ * It stores information about the ball's position, velocity, and appearance.
+ */
 public class Ball {
-    private final int defult_x = Screen.window_width / 2;
-    private final int defult_y = Screen.window_height / 2;
-    private static ImageIcon ball_icon;
-    private final static String iconPath = "assets/ball.png";
-    private final int width = 53;
-    private final int height = 53;
+    /**
+     * The speed of the ball, which determines the delay of the game's timer.
+     * A smaller number results in a faster ball movement.
+     * Suggestion: Consider renaming this to something like 'TIMER_DELAY_MS' for clarity.
+     */
+    private final int SPEED = 1;
+    private static final String ICON_PATH = "assets/ball.png";
+    private static final int WIDTH = 53;
+    private static final int HEIGHT = 53;
+    private static ImageIcon ballIcon;
     private int x;
     private int y;
-    private int x_velocity = 1; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
-    private int y_velocity = 1; // This is how much pixels the ball add every movement, the bigger number he is, the faster the ball will be.
-    private int moving_spped = 1; // The smaller number, the faster the ball movement will be(it's in timer.start()).
+    /**
+     * The horizontal velocity of the ball in pixels per timer tick.
+     * A larger number means a faster ball.
+     */
+    private int xVelocity = 1;
+    /**
+     * The vertical velocity of the ball in pixels per timer tick.
+     * A larger number means a faster ball.
+     */
+    private int yVelocity = 1;
 
-    public Ball(){
-        ball_icon = new ImageIcon(iconPath);
-        x = defult_x;
-        y = defult_y;
+    /**
+     * Constructs a new Ball object at the specified coordinates.
+     * @param x The initial x-coordinate of the ball.
+     * @param y The initial y-coordinate of the ball.
+     */
+    public Ball(int x, int y){
+        ballIcon = new ImageIcon(ICON_PATH);
+        this.x = x;
+        this.y = y;
     }
 
-    // the function return the ball width(pixels).
-    public int get_width() {
-        return width;
+    /**
+     * Returns the width of the ball in pixels.
+     * @return The width of the ball.
+     */
+    public static int getWidth() {
+        return WIDTH;
     }
 
-    // the function return the ball height(pixels).
-    public int get_height() {
-        return height;
+    /**
+     * Returns the height of the ball in pixels.
+     * @return The height of the ball.
+     */
+    public static int getHeight() {
+        return HEIGHT;
     }
 
-    // the function return the x point of the ball at the moment.
-    public int get_x(){
+    /**
+     * Returns the current x-coordinate of the ball.
+     * @return The x-coordinate of the ball.
+     */
+    public int getX(){
         return x;
     }
 
-    // the function return the y point of the ball at the moment.
-    public int get_y(){
+    /**
+     * Returns the current y-coordinate of the ball.
+     * @return The y-coordinate of the ball.
+     */
+    public int getY(){
         return y;
     }
 
-    // the function return the ball icon as ImageIcon.
-    public ImageIcon get_icon(){
-        return ball_icon;
+    /**
+     * Returns the icon for the ball.
+     * @return The ImageIcon of the ball.
+     */
+    public static ImageIcon getIcon(){
+        return ballIcon;
     }
 
-    // the function return path of the icon image of the ball.
-    public static String get_iconPath(){
-        return iconPath;
+    /**
+     * Returns the path to the ball's icon image.
+     * @return The file path of the ball's icon.
+     */
+    public static String getIconPath(){
+        return ICON_PATH;
     }
 
-    // the function return ball x velocity(speed) in pixels as unit.
-    public int get_ball_x_velocity(){
-        return x_velocity;
+    /**
+     * Returns the horizontal velocity of the ball.
+     * @return The ball's horizontal velocity.
+     */
+    public int getBallXVelocity(){
+        return xVelocity;
     }
 
-    // the function return ball x velocity(speed) in pixels as unit.
-    public int get_ball_y_velocity(){
-        return y_velocity;
+    /**
+     * Sets the horizontal velocity of the ball.
+     * @param xVelocity The new horizontal velocity.
+     */
+    public void setBallXVelocity(int xVelocity){
+        this.xVelocity = xVelocity;
+    }
+    /**
+     * Returns the vertical velocity of the ball.
+     * @return The ball's vertical velocity.
+     */
+    public int getBallYVelocity(){
+        return yVelocity;
+    }
+    /**
+     * Sets the vertical velocity of the ball.
+     * @param yVelocity The new vertical velocity.
+     */
+    public void setBallYVelocity(int yVelocity){
+        this.yVelocity = yVelocity;
+    }
+    /**
+     * Returns the speed of the ball, which corresponds to the timer delay.
+     * @return The timer delay in milliseconds.
+     */
+    public int getBallSpeed(){
+        return SPEED;
     }
 
-    // the function return "speed" of the ball but it more like the time the function will "refresh" and check the ball course(units in msec).
-    public int get_moving_speed(){
-        return moving_spped;
-    }
-
-    // here the program give ball object updated x and y coordinates after calculation of moving/collision.
-    public void set_new_cor(int x, int y) {
+    /**
+     * Sets the position of the ball to the specified coordinates.
+     * This is used to update the ball's location after movement or collision calculations.
+     * @param x The new x-coordinate.
+     * @param y The new y-coordinate.
+     */
+    public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }

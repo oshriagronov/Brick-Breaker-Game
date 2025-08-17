@@ -1,64 +1,95 @@
 package GameObjects;
 import javax.swing.ImageIcon;
-import Render.Screen;
-
+/**
+ * The Paddle class represents the player's paddle in the game.
+ * It manages the paddle's position, dimensions, speed, and icon.
+ */
 public class Paddle{
-    private static ImageIcon paddle_icon;
-    private final static String iconPath = "assets/paddle.png";
-    private final int defult_x = (Screen.window_width / 2) - 100;
-    private final int defult_y = Screen.window_height - 70;
-    private final int width = 210;
-    private final int height = 34;
+    private static final String ICON_PATH = "assets/paddle.png";
+    private static final int WIDTH = 210;
+    private static final int HEIGHT = 34;
+    /**
+     * The speed at which the paddle moves horizontally.
+     * Suggestion: Consider if this speed should be configurable, for example, through a settings file or difficulty levels.
+     */
+    private final int SPEED = 20;
+    private static ImageIcon paddleIcon;
     private int x;
     private int y;
-    private final int moving_speed = 20;
-    
-    // paddle constructor.
-    public Paddle(){
-        paddle_icon = new ImageIcon(iconPath);
-        x = defult_x;
-        y = defult_y;
 
+    /**
+     * Constructs a new Paddle at the specified initial position.
+     * @param x The initial x-coordinate of the paddle.
+     * @param y The initial y-coordinate of the paddle.
+     */
+    public Paddle(int x, int y){
+        paddleIcon = new ImageIcon(ICON_PATH);
+        this.x = x;
+        this.y = y;
     }
 
-    // the function return the paddle width(pixels).
-    public int get_width() {
-        return width;
+    /**
+     * Returns the width of the paddle in pixels.
+     * @return The paddle's width.
+     */
+    public static int getWidth() {
+        return WIDTH;
     }
 
-    // the function return the paddle height(pixels).
-    public int get_height() {
-        return height;
+    /**
+     * Returns the height of the paddle in pixels.
+     * @return The paddle's height.
+     */
+    public static int getHeight() {
+        return HEIGHT;
     }
 
-    // the function return the x point of the paddle at the moment.
-    public int get_x(){
+    /**
+     * Returns the current x-coordinate of the paddle.
+     * @return The paddle's x-coordinate.
+     */
+    public int getX(){
         return x;
     }
-
-    // the function return the y point of the paddle at the moment.
-    public int get_y(){
-        return y;
-    }
-
-    // the function return the paddle icon as ImageIcon.
-    public ImageIcon get_icon(){
-        return paddle_icon;
-    }
-
-    // the function return the ball icon path(string).
-    public static String get_iconPath(){
-        return iconPath;
-    }
-
-    // the function return moving speed of the paddle(pixel unit).
-    public int get_moving_speed(){
-        return moving_speed;
-    }
-
-    // here the program give paddle object updated x coordinates after calculation of moving.
-    public void set_new_cor(int x) {
+    
+    /**
+     * Updates the x-coordinate of the paddle. This is used to move the paddle
+     * based on player input.
+     * @param x The new x-coordinate for the paddle.
+     */
+    public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * Returns the current y-coordinate of the paddle.
+     * @return The paddle's y-coordinate.
+     */
+    public int getY(){
+        return y;
+    }
+
+    /**
+     * Returns the icon for the paddle.
+     * @return The paddle's ImageIcon.
+     */
+    public static ImageIcon getIcon(){
+        return paddleIcon;
+    }
+
+    /**
+     * Returns the path to the paddle's icon image.
+     * @return The file path of the paddle's icon.
+     */
+    public static String getIconPath(){
+        return ICON_PATH;
+    }
+
+    /**
+     * Returns the moving speed of the paddle in pixels per key press.
+     * @return The paddle's speed.
+     */
+    public int getPaddleSpeed(){
+        return SPEED;
+    }
 }

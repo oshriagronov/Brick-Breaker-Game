@@ -1,75 +1,110 @@
 package Main;
 import javax.swing.ImageIcon;
 
+/**
+ * The Player class encapsulates all data related to the player,
+ * including life points, score, and the visual representation of lives (hearts).
+ */
 public class Player {
-    private int life_points; // The amount of tries the player will have.
-    private int score = 0; // The score the user got in the game(started at 0 and with every brick he break he will get more).
-    private int score_amount; // amount of points to give the player for every brick he will break.
-    private static ImageIcon heart_icon;
-    private final static String iconPath = "assets/heart.png";
-    private final int heart_y_position;
-    private final int heart_x_position;
-    private final int heart_width = 50;
-    private final int heart_height = 50;
+    private static final int HEART_WIDTH = 50;
+    private static final int HEART_HEIGHT = 50;
+    private static final int HEART_Y_POSITION = 0;
+    private static final int HEART_X_POSITION = HEART_WIDTH;
+    private static final String ICON_PATH = "assets/heart.png";
+    private static ImageIcon heartIcon;
+    /** The number of remaining lives for the player. */
+    private int lifePoints;
+    /** The player's current score, which starts at 0. */
+    private int score = 0;
+    /** The number of points awarded for breaking a single brick. */
+    private int scoreAmount;
 
-// ## player constructor.
-    //  the constructor need to get the number of life point he player will have and the score bonus for every brick he will break.
-    public Player(int life_points, int score_amount){
-        this.life_points = life_points; // The game manager will decide the amount of tries to give the player.
-        this.score_amount = score_amount; // The game manager will decide the amount of points to give the player for every brick he will break.
-        heart_icon = new ImageIcon(iconPath);
-        heart_y_position = 0;
-        heart_x_position = heart_width;
+    /**
+     * Constructs a new Player object with a specified number of lives and score increment amount.
+     * @param lifePoints The initial number of lives for the player.
+     * @param scoreAmount The amount of points to add to the score for each broken brick.
+     */
+    public Player(int lifePoints, int scoreAmount){
+        this.lifePoints = lifePoints;
+        this.scoreAmount = scoreAmount;
+        heartIcon = new ImageIcon(ICON_PATH);
     }
 
-
-    // the user lose one life point
-    public void lose_life_point(){
-        life_points -= 1;
+    /**
+     * Decrements the player's life points by one.
+     */
+    public void loseLifePoint(){
+        lifePoints -= 1;
     }
 
-    // Add point to player for every brick he will break, the amount will be decided by game manager.
-    public void add_score(){
-        score += score_amount;
+    /**
+     * Increases the player's score by the pre-configured score amount.
+     */
+    public void addScore(){
+        score += scoreAmount;
     }
 
-    // give the score of the player
-    public int get_score(){
+    /**
+     * Returns the player's current score.
+     * @return The current score.
+     */
+    public int getScore(){
         return score;
     }
         
-    // give the number of player life points.
-    public int get_life_points(){
-        return life_points;
+    /**
+     * Returns the player's remaining life points.
+     * @return The number of life points.
+     */
+    public int getLifePoints(){
+        return lifePoints;
     }
 
-    // give the heart width logo
-    public int get_heart_width() {
-        return heart_width;
+    /**
+     * Returns the width of the heart icon.
+     * @return The heart icon's width in pixels.
+     */
+    public int getHeartWidth() {
+        return HEART_WIDTH;
     }
 
-    // give the heart height logo
-    public int get_heart_height() {
-        return heart_height;
+    /**
+     * Returns the height of the heart icon.
+     * @return The heart icon's height in pixels.
+     */
+    public int getHeartHeight() {
+        return HEART_HEIGHT;
     }
 
-    // give the heart x coordinate logo
-    public int get_heart_x(){
-        return heart_x_position;
+    /**
+     * Returns the x-coordinate for positioning the heart icons.
+     * @return The x-coordinate.
+     */
+    public int getHeartX(){
+        return HEART_X_POSITION;
     }
 
-    // give the heart y coordinate logo
-    public int get_heart_y(){
-        return heart_y_position;
+    /**
+     * Returns the y-coordinate for positioning the heart icons.
+     * @return The y-coordinate.
+     */
+    public int getHeartY(){
+        return HEART_Y_POSITION;
     }
 
-    // give the heart logo
-    public ImageIcon get_heart_icon(){
-        return heart_icon;
+    /**
+     * Returns the ImageIcon for the heart.
+     * @return The heart's ImageIcon.
+     */
+    public ImageIcon getHeartIcon(){
+        return heartIcon;
     }
 
-    // give the heart logo path string
-    public static String get_heart_iconPath(){
-        return iconPath;
+    /**
+     * Returns the file path for the heart icon image.
+     * @return The path to the heart icon.
+     */
+    public static String getHeartIconPath(){
+        return ICON_PATH;
     }
 }
