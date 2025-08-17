@@ -13,7 +13,7 @@ public class Paddle{
      * The speed at which the paddle moves horizontally.
      * Suggestion: Consider if this speed should be configurable, for example, through a settings file or difficulty levels.
      */
-    private final int SPEED = 20;
+    private final int SPEED = 1;
     private static ImageIcon paddleIcon;
     private int x;
     private int y;

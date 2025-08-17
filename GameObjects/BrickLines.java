@@ -16,9 +16,9 @@ public class BrickLines {
      * Constructs the complete set of brick lines for the game level.
      * @param num_of_lines The total number of brick lines to create.
      */
-    public BrickLines(int num_of_lines){
+    public BrickLines(int numOfLines){
         brickLines = new ArrayList<>();
-        for(int i = 0; i < num_of_lines; i++){
+        for(int i = 0; i < numOfLines; i++){
             // Each new line is placed below the previous one.
             brickLines.add(new BrickLine((initialLineHeight * (i + 1))));
         }

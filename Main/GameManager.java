@@ -23,6 +23,7 @@ public class GameManager implements KeyListener{
     // e.g., `(Screen.WINDOW_WIDTH / 2) - (Paddle.getWidth() / 2)`.
     private final int PADDLE_DEFAULT_X = (Screen.WINDOW_WIDTH / 2) - (Paddle.getWidth() / 2);
     private final int PADDLE_DEFAULT_Y = Screen.WINDOW_HEIGHT - 70;
+    private final int numOfLinesOfBricks = 2;
     private Screen screen;
     private SoundEffect sound_effect;
     private Paddle paddle;
@@ -51,7 +52,7 @@ public class GameManager implements KeyListener{
         paddle = new Paddle(PADDLE_DEFAULT_X, PADDLE_DEFAULT_Y);
         ball = new Ball(Ball_DEFAULT_X, BALL_DEFAULT_Y);
         player = new Player(life_points, score_points);
-        lineOfBricks = new BrickLines(2);
+        lineOfBricks = new BrickLines(numOfLinesOfBricks);
         screen.addKeyListener(this);
     }
 
