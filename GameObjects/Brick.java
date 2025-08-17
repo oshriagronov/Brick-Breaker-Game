@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 public class Brick{
     private final static int WIDTH = 190;
     private final static int HEIGHT = 50;
-    private final static String ICON_PATH = "assets/brick.png";
+    private final static String ICON_PATH = AssetPaths.BRICK_ICON_PATH;
     private static ImageIcon brickIcon;
     /**
      * The y-coordinate for the line of bricks. This value determines the

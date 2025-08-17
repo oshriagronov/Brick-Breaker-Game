@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
  * It manages the paddle's position, dimensions, speed, and icon.
  */
 public class Paddle{
-    private static final String ICON_PATH = "assets/paddle.png";
+    private static final String ICON_PATH = AssetPaths.PADDLE_ICON_PATH;
     private static final int WIDTH = 210;
     private static final int HEIGHT = 34;
     /**

@@ -10,7 +10,7 @@ public class Player {
     private static final int HEART_HEIGHT = 50;
     private static final int HEART_Y_POSITION = 0;
     private static final int HEART_X_POSITION = HEART_WIDTH;
-    private static final String ICON_PATH = "assets/heart.png";
+    private static final String ICON_PATH = AssetPaths.HEART_ICON_PATH;
     private static ImageIcon heartIcon;
     /** The number of remaining lives for the player. */
     private int lifePoints;

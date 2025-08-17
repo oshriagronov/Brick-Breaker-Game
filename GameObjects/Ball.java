@@ -4,6 +4,8 @@ import javax.swing.ImageIcon;
  * The Ball class represents the ball object in the game.
  * It stores information about the ball's position, velocity, and appearance.
  */
+
+import Render.AssetPaths;
 public class Ball {
     /**
      * The speed of the ball, which determines the delay of the game's timer.
@@ -12,6 +14,8 @@ public class Ball {
      */
     private final int SPEED = 1;
     private static final String ICON_PATH = "assets/ball.png";
+    private final int SPEED = 1; // The smaller number, the faster the ball movement will be(it's in timer.start()).
+    private static final String ICON_PATH = AssetPaths.BALL_ICON_PATH;
     private static final int WIDTH = 53;
     private static final int HEIGHT = 53;
     private static ImageIcon ballIcon;
