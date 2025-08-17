@@ -98,8 +98,8 @@ public class GameManager implements KeyListener{
             x_brick_location += Brick.getWidth() + bricks_gap;
         }
         // Render all game objects on the screen.
-        screen.addLabels("paddle", Paddle.getIcon(), paddle.getX(), paddle.getY(), Paddle.getWidth(), Paddle.getHeight());
-        screen.addLabels("ball", Ball.getIcon(), ball.getX(), ball.getY(), Ball.getWidth(), Ball.getHeight());
+        screen.addPaddleLabel(Paddle.getIcon(), paddle.getX(), paddle.getY(), Paddle.getWidth(), Paddle.getHeight());
+        screen.addBallLabel(Ball.getIcon(), ball.getX(), ball.getY(), Ball.getWidth(), Ball.getHeight());
         screen.addHeartLabels(player.getLifePoints(), player.getHeartIcon(), player.getHeartX(), player.getHeartY(), player.getHeartWidth(), player.getHeartHeight());
         screen.addBricksLabels(brick_array, num_of_bricks);
         screen.addPlayerScore(player.getScore());

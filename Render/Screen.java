@@ -74,33 +74,36 @@ public class Screen extends JFrame{
     }
 
     /**
-     * Adds a JLabel for the paddle or ball to the screen.
-     * Suggestion: Refactor this to have separate methods like `addPaddleLabel` and `addBallLabel`
-     * to avoid using a String switch, which is less type-safe.
-     * @param name "paddle" or "ball"
+     * Adds a JLabel for the paddle to the screen.
      * @param icon The icon for the label.
      * @param x The x-coordinate.
      * @param y The y-coordinate.
      * @param width The width of the label.
      * @param height The height of the label.
      */
-    public void addLabels(String name,ImageIcon icon, int x, int y, int width, int height){
-        switch(name){
-            case "paddle":
-                paddleLabel = new JLabel(icon, JLabel.CENTER);
-                paddleLabel.setBounds(x, y, width, height);
-                backgroundLabel.add(paddleLabel);
-                break;
-            case "ball":
-                ballLabel = new JLabel(icon, JLabel.CENTER);
-                ballLabel.setBounds(x, y, width, height);
-                backgroundLabel.add(ballLabel);
-                break;
-        }
+
+    public void addPaddleLabel(ImageIcon icon, int x, int y, int width, int height){
+        paddleLabel = new JLabel(icon, JLabel.CENTER);
+        paddleLabel.setBounds(x, y, width, height);
+        backgroundLabel.add(paddleLabel);
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
     }
-
+    /**
+     * Adds a JLabel for the ball to the screen.
+     * @param icon The icon for the label.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param width The width of the label.
+     * @param height The height of the label.
+     */
+    public void addBallLabel(ImageIcon icon, int x, int y, int width, int height){
+        ballLabel = new JLabel(icon, JLabel.CENTER);
+        ballLabel.setBounds(x, y, width, height);
+        backgroundLabel.add(ballLabel);
+        backgroundLabel.revalidate(); 
+        backgroundLabel.repaint();
+    }
     /**
      * Creates and adds JLabels for all bricks to the screen.
      * @param brick_array The list of Brick objects.
