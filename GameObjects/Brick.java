@@ -1,6 +1,7 @@
 package GameObjects;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
+import Render.AssetPaths;
 /**
  * The Brick class represents a single brick object in the game.
  * It stores the brick's position, dimensions, and icon.

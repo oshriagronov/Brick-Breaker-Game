@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
-
 /**
  * The Screen class represents the main game window.
  * It extends JFrame and is responsible for rendering all visual elements,
@@ -19,13 +18,12 @@ public class Screen extends JFrame{
     public final static int WINDOW_HEIGHT = 720;
     /** The width of the game window in pixels. */
     public final static int WINDOW_WIDTH = 1280;
-
     // Asset paths for icons and backgrounds.
-    private final String ICON_PATH = "assets/icon.jpeg";
-    private final String BACKGROUND_PATH = "assets/DARK_BG2_small.jpeg";
-    private final String MENU_ICON_PATH = "assets/brick breaker menu.png";
-    private final String WINING_ICON_PATH = "assets/wining logo.png";
-    private final String GAME_OVER_ICON_PATH = "assets/gameover logo.png";
+    private final String ICON_PATH = AssetPaths.ICON_PATH;
+    private final String BACKGROUND_PATH = AssetPaths.BACKGROUND_PATH;
+    private final String MENU_ICON_PATH = AssetPaths.MENU_ICON_PATH;
+    private final String WINING_ICON_PATH = AssetPaths.WINING_ICON_PATH;
+    private final String GAME_OVER_ICON_PATH = AssetPaths.GAME_OVER_ICON_PATH;
 
     // JLabels used to display game elements.
     public JLabel paddleLabel;

@@ -1,5 +1,6 @@
 package GameObjects;
 import javax.swing.ImageIcon;
+import Render.AssetPaths;
 /**
  * The Paddle class represents the player's paddle in the game.
  * It manages the paddle's position, dimensions, speed, and icon.

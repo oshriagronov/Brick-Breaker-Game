@@ -7,14 +7,16 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import Render.AssetPaths;
+
 /**
  * The SoundEffect class is responsible for loading and playing all sound effects used in the game.
  * It pre-loads audio clips for collisions to ensure they can be played without delay.
  */
 public class SoundEffect {
     // Suggestion: These file paths could be made `private static final` as they are constants.
-    private String COLLISION_SOUND_EFFECT_FILE_PATH = "assets/Bubble5_4.wav";
-    private String BRICK_COLLISION_SOUND_EFFECT_FILE_PATH = "assets/blop_cut_silenced.wav";
+    private String COLLISION_SOUND_EFFECT_FILE_PATH = AssetPaths.COLLISION_SOUND_EFFECT_FILE_PATH;
+    private String BRICK_COLLISION_SOUND_EFFECT_FILE_PATH = AssetPaths.BRICK_COLLISION_SOUND_EFFECT_FILE_PATH;
     private Clip collisionSoundEffect;
     private Clip brickCollisionSoundEffect;
 

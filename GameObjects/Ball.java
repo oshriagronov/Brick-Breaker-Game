@@ -13,8 +13,6 @@ public class Ball {
      * Suggestion: Consider renaming this to something like 'TIMER_DELAY_MS' for clarity.
      */
     private final int SPEED = 1;
-    private static final String ICON_PATH = "assets/ball.png";
-    private final int SPEED = 1; // The smaller number, the faster the ball movement will be(it's in timer.start()).
     private static final String ICON_PATH = AssetPaths.BALL_ICON_PATH;
     private static final int WIDTH = 53;
     private static final int HEIGHT = 53;

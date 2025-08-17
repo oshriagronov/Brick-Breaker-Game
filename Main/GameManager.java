@@ -2,7 +2,6 @@ package Main;
 import Render.*;
 import GameObjects.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class GameManager implements KeyListener{
     private final int BALL_DEFAULT_Y = Screen.WINDOW_HEIGHT / 2;
     // Suggestion: Avoid magic numbers. The paddle's default X should be calculated based on its width,
     // e.g., `(Screen.WINDOW_WIDTH / 2) - (Paddle.getWidth() / 2)`.
-    private final int PADDLE_DEFAULT_X = (Screen.WINDOW_WIDTH / 2) - 100;
+    private final int PADDLE_DEFAULT_X = (Screen.WINDOW_WIDTH / 2) - (Paddle.getWidth() / 2);
     private final int PADDLE_DEFAULT_Y = Screen.WINDOW_HEIGHT - 70;
     private Screen screen;
     private SoundEffect sound_effect;

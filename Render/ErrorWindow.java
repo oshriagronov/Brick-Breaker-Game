@@ -15,7 +15,7 @@ public class ErrorWindow {
     private final int window_height = 150;
     private final int window_width = 500;
     private JLabel error_label = new JLabel();
-    private final ImageIcon error_icon = new ImageIcon("assets/error.png");
+    private final ImageIcon error_icon = new ImageIcon(AssetPaths.ERROR_ICON_PATH);
 
     /**
      * Constructs and displays an error window with a specific message.
