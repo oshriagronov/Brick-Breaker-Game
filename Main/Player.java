@@ -1,11 +1,13 @@
 package Main;
 import javax.swing.ImageIcon;
+
+import Render.AssetPaths;
 public class Player {
     private static final int HEART_WIDTH = 50;
     private static final int HEART_HEIGHT = 50;
     private static final int HEART_Y_POSITION = 0;
     private static final int HEART_X_POSITION = HEART_WIDTH;
-    private static final String ICON_PATH = "assets/heart.png";
+    private static final String ICON_PATH = AssetPaths.HEART_ICON_PATH;
     private static ImageIcon heartIcon;
     private int lifePoints; // The amount of tries the player will have.
     private int score = 0; // The score the user got in the game(started at 0 and with every brick he break he will get more).

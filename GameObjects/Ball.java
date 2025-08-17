@@ -1,8 +1,10 @@
 package GameObjects;
 import javax.swing.ImageIcon;
+
+import Render.AssetPaths;
 public class Ball {
     private final int SPEED = 1; // The smaller number, the faster the ball movement will be(it's in timer.start()).
-    private static final String ICON_PATH = "assets/ball.png";
+    private static final String ICON_PATH = AssetPaths.BALL_ICON_PATH;
     private static final int WIDTH = 53;
     private static final int HEIGHT = 53;
     private static ImageIcon ballIcon;

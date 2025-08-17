@@ -12,11 +12,11 @@ public class Screen extends JFrame{
     public final static int WINDOW_HEIGHT = 720;
     public final static int WINDOW_WIDTH = 1280;
     // Icon variables
-    private final String ICON_PATH = "assets/icon.jpeg";
-    private final String BACKGROUND_PATH = "assets/DARK_BG2_small.jpeg";
-    private final String MENU_ICON_PATH = "assets/brick breaker menu.png";
-    private final String WINING_ICON_PATH = "assets/wining logo.png";
-    private final String GAME_OVER_ICON_PATH = "assets/gameover logo.png";
+    private final String ICON_PATH = AssetPaths.ICON_PATH;
+    private final String BACKGROUND_PATH = AssetPaths.BACKGROUND_PATH;
+    private final String MENU_ICON_PATH = AssetPaths.MENU_ICON_PATH;
+    private final String WINING_ICON_PATH = AssetPaths.WINING_ICON_PATH;
+    private final String GAME_OVER_ICON_PATH = AssetPaths.GAME_OVER_ICON_PATH;
     // Labels variables
     public JLabel paddleLabel;
     public JLabel ballLabel;

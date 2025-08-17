@@ -6,9 +6,11 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import Render.AssetPaths;
 public class SoundEffect {
-    private String COLLISION_SOUND_EFFECT_FILE_PATH = "assets/Bubble5_4.wav";
-    private String BRICK_COLLISION_SOUND_EFFECT_FILE_PATH = "assets/blop_cut_silenced.wav";
+    private String COLLISION_SOUND_EFFECT_FILE_PATH = AssetPaths.COLLISION_SOUND_EFFECT_FILE_PATH;
+    private String BRICK_COLLISION_SOUND_EFFECT_FILE_PATH = AssetPaths.BRICK_COLLISION_SOUND_EFFECT_FILE_PATH;
     Clip collisionSoundEffect;
     Clip brickCollisionSoundEffect;
 

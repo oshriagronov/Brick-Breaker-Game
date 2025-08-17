@@ -1,10 +1,12 @@
 package GameObjects;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
+
+import Render.AssetPaths;
 public class Brick{
     private final static int WIDTH = 190;
     private final static int HEIGHT = 50;
-    private final static String ICON_PATH = "assets/brick.png";
+    private final static String ICON_PATH = AssetPaths.BRICK_ICON_PATH;
     private static ImageIcon brickIcon;
     private int y = 50; // this value deicide where the line of bricks will start.
     private int x;

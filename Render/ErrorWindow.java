@@ -8,7 +8,7 @@ public class ErrorWindow {
     private final int window_height = 150;
     private final int window_width = 500;
     private JLabel error_label = new JLabel();
-    private final ImageIcon error_icon = new ImageIcon("assets/error.png");
+    private final ImageIcon error_icon = new ImageIcon(AssetPaths.ERROR_ICON_PATH);
     // popup error windows if a some of files are missing
     public ErrorWindow(String error_message){
         error_frame.setTitle("Error");
