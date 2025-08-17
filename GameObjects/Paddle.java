@@ -9,15 +9,11 @@ public class Paddle{
     private static final String ICON_PATH = AssetPaths.PADDLE_ICON_PATH;
     private static final int WIDTH = 210;
     private static final int HEIGHT = 34;
-    /**
-     * The speed at which the paddle moves horizontally.
-     * Suggestion: Consider if this speed should be configurable, for example, through a settings file or difficulty levels.
-     */
-    private final int SPEED = 1;
     private static ImageIcon paddleIcon;
+    /** The speed at which the paddle moves horizontally. */
+    private int speed = 10;
     private int x;
     private int y;
-
     /**
      * Constructs a new Paddle at the specified initial position.
      * @param x The initial x-coordinate of the paddle.
@@ -85,12 +81,14 @@ public class Paddle{
     public static String getIconPath(){
         return ICON_PATH;
     }
-
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
     /**
      * Returns the moving speed of the paddle in pixels per key press.
      * @return The paddle's speed.
      */
-    public int getPaddleSpeed(){
-        return SPEED;
+    public int getSpeed(){
+        return speed;
     }
 }

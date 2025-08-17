@@ -7,12 +7,6 @@ import javax.swing.ImageIcon;
 
 import Render.AssetPaths;
 public class Ball {
-    /**
-     * The speed of the ball, which determines the delay of the game's timer.
-     * A smaller number results in a faster ball movement.
-     * Suggestion: Consider renaming this to something like 'TIMER_DELAY_MS' for clarity.
-     */
-    private final int SPEED = 1;
     private static final String ICON_PATH = AssetPaths.BALL_ICON_PATH;
     private static final int WIDTH = 53;
     private static final int HEIGHT = 53;
@@ -23,12 +17,12 @@ public class Ball {
      * The horizontal velocity of the ball in pixels per timer tick.
      * A larger number means a faster ball.
      */
-    private int xVelocity = 1;
+    private int xVelocity = 10;
     /**
      * The vertical velocity of the ball in pixels per timer tick.
      * A larger number means a faster ball.
      */
-    private int yVelocity = 1;
+    private int yVelocity = 10;
 
     /**
      * Constructs a new Ball object at the specified coordinates.
@@ -118,14 +112,6 @@ public class Ball {
     public void setBallYVelocity(int yVelocity){
         this.yVelocity = yVelocity;
     }
-    /**
-     * Returns the speed of the ball, which corresponds to the timer delay.
-     * @return The timer delay in milliseconds.
-     */
-    public int getBallSpeed(){
-        return SPEED;
-    }
-
     /**
      * Sets the position of the ball to the specified coordinates.
      * This is used to update the ball's location after movement or collision calculations.

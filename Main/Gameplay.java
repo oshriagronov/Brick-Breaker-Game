@@ -24,6 +24,8 @@ public class Gameplay implements KeyListener, ActionListener{
     private final int PADDLE_SCREEN_RIGHT_LIMIT = Screen.WINDOW_WIDTH - Paddle.getWidth();
     /** The y-coordinate at which the ball is considered missed, resulting in a loss of life. */
     private final int MISS_HEIGHT = Screen.WINDOW_HEIGHT - Ball.getHeight();
+    /** determines the delay of the game's timer. A smaller number results in a faster the movement of objects. */
+    private static final int TIMER_DELAY_MS = 10;
     private GameEndListener gameEndListener;
     private Player player;
     private Screen screen;
@@ -73,7 +75,7 @@ public class Gameplay implements KeyListener, ActionListener{
      * The timer's delay is determined by the ball's speed property.
      */
     public void run(){
-        timer = new Timer(ball.getBallSpeed(), this);
+        timer = new Timer(TIMER_DELAY_MS, this);
         timer.start();
     }
     /**
@@ -105,7 +107,6 @@ public class Gameplay implements KeyListener, ActionListener{
             }
         }
     }
-
     /** Reverses the ball's horizontal velocity to simulate a bounce. */
     private void ballBounceX(){
         ball.setBallXVelocity(ball.getBallXVelocity() * (-1)) ;
@@ -123,7 +124,7 @@ public class Gameplay implements KeyListener, ActionListener{
         ballBounds.setBounds(ball.getX(), ball.getY(), Ball.getWidth(), Ball.getHeight());
         paddleBounds.setBounds(paddle.getX(), paddle.getY(), Paddle.getWidth(), Paddle.getHeight());
 
-        if(objCollision(ballBounds, paddleBounds)){
+        if(paddleCollision(ballBounds, paddleBounds)){
             soundEffect.playCollisionSoundEffect();
         }
         else if(isBrickCollision(ballBounds)){
@@ -144,28 +145,26 @@ public class Gameplay implements KeyListener, ActionListener{
         ball.setPosition(ball.getX() + ball.getBallXVelocity(), ball.getY() + ball.getBallYVelocity());
         screen.ballLabel.setLocation(ball.getX(), ball.getY());
     }
-
     /**
      * Checks for and handles collision between the ball and a generic rectangular object.
      * @param ballBounds The bounding rectangle of the ball.
      * @param obj The bounding rectangle of the object to check against.
      * @return true if a collision occurred, false otherwise.
      */
-    private boolean objCollision(Rectangle ballBounds, Rectangle obj){
+    private boolean paddleCollision(Rectangle ballBounds, Rectangle obj){
             if(ballBounds.intersects(obj)){
-                Rectangle intersection = ballBounds.intersection(obj);
                 // Determine bounce direction based on the intersection dimensions.
-                if(intersection.width < intersection.height){
-                    ballBounceX();  
-                }
-                else{
-                    ballBounceY();
-                }
+                int paddleCenter = paddle.getX() + Paddle.getWidth() / 2;
+                int ballCenter = ball.getX() + Ball.getWidth() / 2;
+                int distanceFromCenter = ballCenter - paddleCenter;
+                double hitRatio = (double) distanceFromCenter / (Paddle.getWidth() / 2);
+                int ball_x_velocity_max = 10;
+                ball.setBallXVelocity((int) (ball_x_velocity_max * hitRatio));
+                ballBounceY();
                 return true;
             }
             return false;
     }
-
     /**
      * Checks if the ball has collided with any of the bricks. If a collision occurs,
      * the brick is removed from the game.
@@ -173,9 +172,17 @@ public class Gameplay implements KeyListener, ActionListener{
      * @return true if a collision with a brick occurred, false otherwise.
      */
     private boolean isBrickCollision(Rectangle ballBounds){
-        for(int i = 0; i < lineOfBricks.getNumOfLines(); i++){
-            for(int j = 0; j < lineOfBricks.getLineByIndex(i).getNumOfBricks(); j++){
-                if(objCollision(ballBounds, lineOfBricks.getLineByIndex(i).getBrickByIndex(j).getRectangleBrick())){
+        int numOfLines = lineOfBricks.getNumOfLines();
+        for(int i = 0; i < numOfLines; i++){
+            int numOfBricks = lineOfBricks.getLineByIndex(i).getNumOfBricks();
+            for(int j = 0; j < numOfBricks; j++){
+                Rectangle brick = lineOfBricks.getLineByIndex(i).getBrickByIndex(j).getRectangleBrick();
+                if(ballBounds.intersects(brick)){
+                    Rectangle intersection = ballBounds.intersection(brick);
+                    if(intersection.width < intersection.height)
+                        ballBounceX();
+                    else
+                        ballBounceY();
                     screen.brickDestroy(i, j);
                     lineOfBricks.removeBrickFromLineByIndex(i,j);
                     return true;
@@ -184,7 +191,6 @@ public class Gameplay implements KeyListener, ActionListener{
         }
         return false;
     }
-
     /**
      * Determines if the game has ended, either by destroying all bricks (win)
      * or losing all life points (lose).
@@ -199,7 +205,6 @@ public class Gameplay implements KeyListener, ActionListener{
         }
         return false;
     }
-
     /**
      * Updates the paddle's position based on the current movement flags.
      * This method is called in the game loop to ensure smooth, continuous movement.
@@ -207,14 +212,13 @@ public class Gameplay implements KeyListener, ActionListener{
     private void updatePaddlePosition() {
         int paddlePositionX = paddle.getX();
         if (movingLeft && paddlePositionX > PADDLE_SCREEN_LEFT_LIMIT) {
-            paddle.setX(paddlePositionX - paddle.getPaddleSpeed());
+            paddle.setX(paddlePositionX - paddle.getSpeed());
         }
         if (movingRight && paddlePositionX < PADDLE_SCREEN_RIGHT_LIMIT) {
-            paddle.setX(paddlePositionX + paddle.getPaddleSpeed());
+            paddle.setX(paddlePositionX + paddle.getSpeed());
         }
         screen.paddleLabel.setLocation(paddle.getX(), paddle.getY());
     }
-
     /**
      * Handles key presses for paddle movement.
      * Sets boolean flags to indicate the start of movement.
@@ -240,7 +244,6 @@ public class Gameplay implements KeyListener, ActionListener{
             movingRight = false;
         }
     }
-
     /** This method is intentionally left empty as it is not needed. */
     @Override
     public void keyTyped(KeyEvent e) {}
