@@ -14,19 +14,20 @@ public class Brick{
     /**
      * The y-coordinate for the line of bricks. This value determines the
      * starting vertical position of the bricks on the screen.
-     * Suggestion: Make this a constructor parameter if bricks can appear at different y-coordinates.
      */
-    private int y = 50;
+    private int y;
     private int x;
     private Rectangle rectangle_brick;
 
     /**
      * Constructs a new Brick object at the specified x-coordinate.
      * @param x The x-coordinate of the brick.
+     * @param y The y-coordinate of the brick.
      */
-    public Brick(int x){
+    public Brick(int x, int y){
         brickIcon = new ImageIcon(ICON_PATH);
         this.x = x;
+        this.y = y;
         rectangle_brick = new Rectangle(x, y, WIDTH, HEIGHT);
     }
 

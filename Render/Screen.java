@@ -2,10 +2,13 @@ package Render;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import GameObjects.Brick;
+import GameObjects.BrickLines;
+
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * The Screen class represents the main game window.
@@ -31,7 +34,7 @@ public class Screen extends JFrame{
     private JLabel backgroundLabel;
     private JLabel [] heartLabels;
     private JLabel playerScore;
-    private JLabel [] brickLabels;
+    private List <ArrayList<JLabel>> bricksLines = new ArrayList<>();
     private JLabel menuLogoLabel;
     private JLabel winingLogoLabel;
     private JLabel gameOverLogoLabel;
@@ -109,13 +112,15 @@ public class Screen extends JFrame{
      * @param brick_array The list of Brick objects.
      * @param numOfBricks The total number of bricks.
      */
-    public void addBricksLabels(List <Brick> brick_array, int numOfBricks){
-        this.brickLabels = new JLabel[numOfBricks];
-        for(int i = 0; i < numOfBricks; i++){
-            JLabel brick_label = new JLabel(brick_array.get(i).getIcon(), JLabel.CENTER);
-            brick_label.setBounds(brick_array.get(i).getX(), brick_array.get(i).getY(), Brick.getWidth(), Brick.getHeight());
-            brickLabels[i] = brick_label;
-            backgroundLabel.add(brickLabels[i]);
+    public void addBricksLabels(BrickLines lineOfBricks){
+        for(int i = 0; i < lineOfBricks.getNumOfLines(); i++){
+            bricksLines.add(new ArrayList<>());
+            for(int j = 0; j < lineOfBricks.getLineByIndex(i).getNumOfBricks(); j++){
+                JLabel brick = new JLabel(lineOfBricks.getLineByIndex(i).getBrickByIndex(j).getIcon(), JLabel.CENTER);
+                brick.setBounds(lineOfBricks.getLineByIndex(i).getBrickByIndex(j).getX(), lineOfBricks.getLineByIndex(i).getBrickByIndex(j).getY(), Brick.getWidth(), Brick.getHeight());
+                bricksLines.get(i).add(brick);
+                backgroundLabel.add(brick);
+            }
         }
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
@@ -123,24 +128,16 @@ public class Screen extends JFrame{
 
     /**
      * Removes a brick's JLabel from the screen after it has been destroyed.
-     * Suggestion: The array copying logic is inefficient. Consider using a List<JLabel> for `brickLabels`
-     * which would make removal much simpler (`brickLabels.remove(brickIndex)`).
+     * @param brickLineIndex The index of the line the brick belong
      * @param brickIndex The index of the brick to remove.
      */
-    public void brickDestroy(int brickIndex){
-        backgroundLabel.remove(brickLabels[brickIndex]);
-
-        if(brickLabels.length == 1){
-            // No need to copy if it's the last brick.
-        } else {
-            JLabel [] copy = new JLabel[brickLabels.length - 1];
-            for (int i = 0, k = 0; i < brickLabels.length; i++) {
-                if (i != brickIndex) {
-                    copy[k++] = brickLabels[i];
-                }
-            }
-            brickLabels = copy;
+    public void brickDestroy(int brickLineIndex, int brickIndex){
+        backgroundLabel.remove(bricksLines.get(brickLineIndex).get(brickIndex));
+        bricksLines.get(brickLineIndex).remove(brickIndex);
+        if(bricksLines.get(brickLineIndex).isEmpty()){
+            bricksLines.remove(brickLineIndex);
         }
+        // Revalidate and repaint the screen (to ensure the changes are applied
         backgroundLabel.revalidate();
         backgroundLabel.repaint();
     }

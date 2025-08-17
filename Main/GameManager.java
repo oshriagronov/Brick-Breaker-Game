@@ -3,8 +3,6 @@ import Render.*;
 import GameObjects.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -15,7 +13,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * The GameManager class is the central component of the game.
  * It is responsible for initializing the game objects, managing the game state,
  * handling user input, and coordinating the overall game flow from the menu to the game's end.
- *
  * Suggestion: Consider creating a dedicated GameState enum (e.g., MENU, PLAYING, GAME_OVER)
  * to manage the state transitions more explicitly, rather than relying on boolean flags like `key_pressed`.
  */
@@ -30,17 +27,14 @@ public class GameManager implements KeyListener{
     private SoundEffect sound_effect;
     private Paddle paddle;
     private Ball ball;
-    private List<Brick> brick_array;
-    private int num_of_bricks;
-    private int bricks_gap;
     private Player player;
+    private BrickLines lineOfBricks;
     /** The number of lives the player has before the game is over. */
     private int life_points = 3;
     /** The points awarded for breaking a single brick. */
     private int score_points = 100;
     /** Tracks if a key has been pressed to start the game from the menu. */
     private boolean key_pressed;
-
     /**
      * Constructs a GameManager, initializing all game components.
      * It performs a pre-launch check for necessary asset files and exits if any are missing.
@@ -57,11 +51,7 @@ public class GameManager implements KeyListener{
         paddle = new Paddle(PADDLE_DEFAULT_X, PADDLE_DEFAULT_Y);
         ball = new Ball(Ball_DEFAULT_X, BALL_DEFAULT_Y);
         player = new Player(life_points, score_points);
-        // Calculate how many bricks can fit in a single row across the screen width.
-        num_of_bricks = Screen.WINDOW_WIDTH / Brick.getWidth();
-        brick_array = new ArrayList<>();
-        // Calculate the horizontal gap between each brick to distribute them evenly.
-        bricks_gap = ((Screen.WINDOW_WIDTH - (num_of_bricks * Brick.getWidth())) / num_of_bricks) / 2;
+        lineOfBricks = new BrickLines(2);
         screen.addKeyListener(this);
     }
 
@@ -89,24 +79,14 @@ public class GameManager implements KeyListener{
     public void start(){
         screen.clearScreen();
         screen.removeKeyListener(this); // Remove this listener to pass control to Gameplay's listener.
-
-        // Create a row of bricks and add them to the brick list.
-        int x_brick_location = 0;
-        for(int i = 0; i < num_of_bricks; i++){
-            x_brick_location += bricks_gap;
-            brick_array.add(new Brick(x_brick_location));
-            x_brick_location += Brick.getWidth() + bricks_gap;
-        }
         // Render all game objects on the screen.
         screen.addPaddleLabel(Paddle.getIcon(), paddle.getX(), paddle.getY(), Paddle.getWidth(), Paddle.getHeight());
         screen.addBallLabel(Ball.getIcon(), ball.getX(), ball.getY(), Ball.getWidth(), Ball.getHeight());
         screen.addHeartLabels(player.getLifePoints(), player.getHeartIcon(), player.getHeartX(), player.getHeartY(), player.getHeartWidth(), player.getHeartHeight());
-        screen.addBricksLabels(brick_array, num_of_bricks);
+        screen.addBricksLabels(lineOfBricks);
         screen.addPlayerScore(player.getScore());
-
         // Initialize and run the core gameplay logic.
-        Gameplay gameplay = new Gameplay(player, screen, sound_effect, ball, paddle, brick_array);
-
+        Gameplay gameplay = new Gameplay(player, screen, sound_effect, ball, paddle, lineOfBricks);
         // Set up a listener to handle game-end conditions (win or lose).
         gameplay.setGameEndListener(() -> {
         if (player.getLifePoints() == 0) {

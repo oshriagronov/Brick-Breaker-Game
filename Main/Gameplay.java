@@ -2,13 +2,12 @@ package Main;
 import Render.Screen;
 import GameObjects.Paddle;
 import GameObjects.Ball;
-import GameObjects.Brick;
+import GameObjects.BrickLines;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.List;
 import javax.swing.Timer;
 
 /**
@@ -31,7 +30,7 @@ public class Gameplay implements KeyListener, ActionListener{
     private SoundEffect soundEffect;
     private Paddle paddle;
     private Ball ball;
-    private List <Brick> brickArrayList;
+    private BrickLines lineOfBricks;
     /** The main game timer that triggers an action event at a regular interval to drive the game's state. */
     private Timer timer;
     private Rectangle ballBounds;
@@ -46,18 +45,17 @@ public class Gameplay implements KeyListener, ActionListener{
      * @param paddle The paddle object.
      * @param brickArrayList The list of bricks in the level.
      */
-    public Gameplay(Player player, Screen screen, SoundEffect soundEffect, Ball ball, Paddle paddle, List <Brick> brickArrayList){
+    public Gameplay(Player player, Screen screen, SoundEffect soundEffect, Ball ball, Paddle paddle, BrickLines lineOfBricks){
         screen.addKeyListener(this);
         this.player = player;
         this.screen = screen;
         this.soundEffect = soundEffect;
         this.ball = ball;
         this.paddle = paddle;
-        this.brickArrayList = brickArrayList;
+        this.lineOfBricks = lineOfBricks;
         ballBounds = new Rectangle();
         paddleBounds = new Rectangle();
     }
-
     /**
      * Sets a listener that will be notified when the game ends (either by winning or losing).
      * @param listener The listener to be notified.
@@ -74,7 +72,6 @@ public class Gameplay implements KeyListener, ActionListener{
         timer = new Timer(ball.getBallSpeed(), this);
         timer.start();
     }
-
     /**
      * This method is called by the Timer at each interval. It serves as the main game loop,
      * updating the game state, checking for collisions, and determining if the game is over.
@@ -169,11 +166,13 @@ public class Gameplay implements KeyListener, ActionListener{
      * @return true if a collision with a brick occurred, false otherwise.
      */
     private boolean isBrickCollision(Rectangle ballBounds){
-        for(Brick brick: brickArrayList) {
-            if(objCollision(ballBounds, brick.getRectangleBrick())){
-                screen.brickDestroy(brickArrayList.indexOf(brick));
-                brickArrayList.remove(brick);
-                return true;
+        for(int i = 0; i < lineOfBricks.getNumOfLines(); i++){
+            for(int j = 0; j < lineOfBricks.getLineByIndex(i).getNumOfBricks(); j++){
+                if(objCollision(ballBounds, lineOfBricks.getLineByIndex(i).getBrickByIndex(j).getRectangleBrick())){
+                    screen.brickDestroy(i, j);
+                    lineOfBricks.removeBrickFromLineByIndex(i,j);
+                    return true;
+                }
             }
         }
         return false;
@@ -185,7 +184,7 @@ public class Gameplay implements KeyListener, ActionListener{
      * @return true if the game is over, false otherwise.
      */
     private boolean isGameOver(){
-        if(brickArrayList.isEmpty()){
+        if(lineOfBricks.getNumOfLines() == 0){
             return true;
         }
         else if(player.getLifePoints() == 0){
