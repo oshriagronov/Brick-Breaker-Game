@@ -61,6 +61,7 @@ public class GameManager implements KeyListener{
         // Calculate how many bricks can fit in a single row across the screen width.
         num_of_bricks = Screen.WINDOW_WIDTH / Brick.getWidth();
         brick_array = new ArrayList<>();
+        // Calculate the horizontal gap between each brick to distribute them evenly.
         bricks_gap = ((Screen.WINDOW_WIDTH - (num_of_bricks * Brick.getWidth())) / num_of_bricks) / 2;
         screen.addKeyListener(this);
     }
@@ -132,11 +133,19 @@ public class GameManager implements KeyListener{
         }
     }
 
+    /**
+     * This method is not used in this context.
+     * @param e The KeyEvent.
+     */
     @Override
     public void keyTyped(KeyEvent e) {
         // Intentionally left empty.
     }
 
+    /**
+     * This method is not used in this context.
+     * @param e The KeyEvent.
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         // Intentionally left empty.
