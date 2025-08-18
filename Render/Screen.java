@@ -2,12 +2,13 @@ package Render;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import GameObjects.Brick;
+import GameObjects.BrickLines;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.List;
-
 /**
  * The Screen class represents the main game window.
  * It extends JFrame and is responsible for rendering all visual elements,
@@ -19,24 +20,23 @@ public class Screen extends JFrame{
     public final static int WINDOW_HEIGHT = 720;
     /** The width of the game window in pixels. */
     public final static int WINDOW_WIDTH = 1280;
-
     // Asset paths for icons and backgrounds.
-    private final String ICON_PATH = "assets/icon.jpeg";
-    private final String BACKGROUND_PATH = "assets/DARK_BG2_small.jpeg";
-    private final String MENU_ICON_PATH = "assets/brick breaker menu.png";
-    private final String WINING_ICON_PATH = "assets/wining logo.png";
-    private final String GAME_OVER_ICON_PATH = "assets/gameover logo.png";
+    private final String ICON_PATH = AssetPaths.ICON_PATH;
+    private final String BACKGROUND_PATH = AssetPaths.BACKGROUND_PATH;
+    private final String MENU_ICON_PATH = AssetPaths.MENU_ICON_PATH;
+    private final String WINING_ICON_PATH = AssetPaths.WINING_ICON_PATH;
+    private final String GAME_OVER_ICON_PATH = AssetPaths.GAME_OVER_ICON_PATH;
 
     // JLabels used to display game elements.
     public JLabel paddleLabel;
     public JLabel ballLabel;
     private JLabel backgroundLabel;
-    private JLabel [] heartLabels;
     private JLabel playerScore;
-    private JLabel [] brickLabels;
     private JLabel menuLogoLabel;
     private JLabel winingLogoLabel;
     private JLabel gameOverLogoLabel;
+    private List <JLabel> heartLabels;
+    private List <ArrayList<JLabel>> bricksLines = new ArrayList<>();
 
     /**
      * Constructs the main game screen (JFrame).
@@ -76,45 +76,50 @@ public class Screen extends JFrame{
     }
 
     /**
-     * Adds a JLabel for the paddle or ball to the screen.
-     * Suggestion: Refactor this to have separate methods like `addPaddleLabel` and `addBallLabel`
-     * to avoid using a String switch, which is less type-safe.
-     * @param name "paddle" or "ball"
+     * Adds a JLabel for the paddle to the screen.
      * @param icon The icon for the label.
      * @param x The x-coordinate.
      * @param y The y-coordinate.
      * @param width The width of the label.
      * @param height The height of the label.
      */
-    public void addLabels(String name,ImageIcon icon, int x, int y, int width, int height){
-        switch(name){
-            case "paddle":
-                paddleLabel = new JLabel(icon, JLabel.CENTER);
-                paddleLabel.setBounds(x, y, width, height);
-                backgroundLabel.add(paddleLabel);
-                break;
-            case "ball":
-                ballLabel = new JLabel(icon, JLabel.CENTER);
-                ballLabel.setBounds(x, y, width, height);
-                backgroundLabel.add(ballLabel);
-                break;
-        }
+
+    public void addPaddleLabel(ImageIcon icon, int x, int y, int width, int height){
+        paddleLabel = new JLabel(icon, JLabel.CENTER);
+        paddleLabel.setBounds(x, y, width, height);
+        backgroundLabel.add(paddleLabel);
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
     }
-
+    /**
+     * Adds a JLabel for the ball to the screen.
+     * @param icon The icon for the label.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param width The width of the label.
+     * @param height The height of the label.
+     */
+    public void addBallLabel(ImageIcon icon, int x, int y, int width, int height){
+        ballLabel = new JLabel(icon, JLabel.CENTER);
+        ballLabel.setBounds(x, y, width, height);
+        backgroundLabel.add(ballLabel);
+        backgroundLabel.revalidate(); 
+        backgroundLabel.repaint();
+    }
     /**
      * Creates and adds JLabels for all bricks to the screen.
      * @param brick_array The list of Brick objects.
      * @param numOfBricks The total number of bricks.
      */
-    public void addBricksLabels(List <Brick> brick_array, int numOfBricks){
-        this.brickLabels = new JLabel[numOfBricks];
-        for(int i = 0; i < numOfBricks; i++){
-            JLabel brick_label = new JLabel(brick_array.get(i).getIcon(), JLabel.CENTER);
-            brick_label.setBounds(brick_array.get(i).getX(), brick_array.get(i).getY(), Brick.getWidth(), Brick.getHeight());
-            brickLabels[i] = brick_label;
-            backgroundLabel.add(brickLabels[i]);
+    public void addBricksLabels(BrickLines lineOfBricks){
+        for(int i = 0; i < lineOfBricks.getNumOfLines(); i++){
+            bricksLines.add(new ArrayList<>());
+            for(int j = 0; j < lineOfBricks.getLineByIndex(i).getNumOfBricks(); j++){
+                JLabel brick = new JLabel(lineOfBricks.getLineByIndex(i).getBrickByIndex(j).getIcon(), JLabel.CENTER);
+                brick.setBounds(lineOfBricks.getLineByIndex(i).getBrickByIndex(j).getX(), lineOfBricks.getLineByIndex(i).getBrickByIndex(j).getY(), Brick.getWidth(), Brick.getHeight());
+                bricksLines.get(i).add(brick);
+                backgroundLabel.add(brick);
+            }
         }
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
@@ -122,24 +127,16 @@ public class Screen extends JFrame{
 
     /**
      * Removes a brick's JLabel from the screen after it has been destroyed.
-     * Suggestion: The array copying logic is inefficient. Consider using a List<JLabel> for `brickLabels`
-     * which would make removal much simpler (`brickLabels.remove(brickIndex)`).
+     * @param brickLineIndex The index of the line the brick belong
      * @param brickIndex The index of the brick to remove.
      */
-    public void brickDestroy(int brickIndex){
-        backgroundLabel.remove(brickLabels[brickIndex]);
-
-        if(brickLabels.length == 1){
-            // No need to copy if it's the last brick.
-        } else {
-            JLabel [] copy = new JLabel[brickLabels.length - 1];
-            for (int i = 0, k = 0; i < brickLabels.length; i++) {
-                if (i != brickIndex) {
-                    copy[k++] = brickLabels[i];
-                }
-            }
-            brickLabels = copy;
+    public void brickDestroy(int brickLineIndex, int brickIndex){
+        backgroundLabel.remove(bricksLines.get(brickLineIndex).get(brickIndex));
+        bricksLines.get(brickLineIndex).remove(brickIndex);
+        if(bricksLines.get(brickLineIndex).isEmpty()){
+            bricksLines.remove(brickLineIndex);
         }
+        // Revalidate and repaint the screen (to ensure the changes are applied
         backgroundLabel.revalidate();
         backgroundLabel.repaint();
     }
@@ -178,11 +175,11 @@ public class Screen extends JFrame{
      * @param height The height of a heart icon.
      */
     public void addHeartLabels(int numOfTries, ImageIcon icon, int x, int y, int width, int height){
-        heartLabels = new JLabel [numOfTries];
+        heartLabels = new ArrayList<>();
         for(int i = 0; i < numOfTries; i++){
-            heartLabels[i] = new JLabel(icon,JLabel.CENTER);
-            heartLabels[i].setBounds((x * i), y, width, height); // Hearts are placed side-by-side.
-            backgroundLabel.add(heartLabels[i]);
+            heartLabels.add(new JLabel(icon,JLabel.CENTER));
+            heartLabels.get(i).setBounds((x * i), y, width, height); // Hearts are placed side-by-side.
+            backgroundLabel.add(heartLabels.get(i));
         }
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
@@ -192,10 +189,11 @@ public class Screen extends JFrame{
      * Removes a heart icon from the screen when the player loses a life.
      * @param num The index of the heart label to remove.
      */
-    public void removeHeartLabel(int num){
-        backgroundLabel.remove(heartLabels[num]);
+    public void removeHeartLabel(int index){
+        backgroundLabel.remove(heartLabels.get(index));
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
+        heartLabels.remove(index);
     }
 
     /** Displays the winning screen. */

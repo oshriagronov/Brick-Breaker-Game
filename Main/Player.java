@@ -1,6 +1,6 @@
 package Main;
 import javax.swing.ImageIcon;
-
+import Render.AssetPaths;
 /**
  * The Player class encapsulates all data related to the player,
  * including life points, score, and the visual representation of lives (hearts).
