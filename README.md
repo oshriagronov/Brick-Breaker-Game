@@ -1,6 +1,3 @@
-<h1 align="center">The game is under overhaul progress!, for now the game unplayable.</h1>
-
-<br />
 <div align="center">
   <a href="https://github.com/oshriagronov/brick-breaker">
     <img src="logo.png" alt="Logo" width="200" height="200">
@@ -22,6 +19,13 @@ This implementation demonstrates a solid understanding of object-oriented princi
 - Life points system.
 - Score system.
 
+## Future plans
+ The recently completed overhaul provides a solid foundation for version 2.0, which will include:
+ - A more modern design
+ - An option to reset the game after winning or losing
+ - Possible bonuses that appear randomly when bricks are destroyed
+ - And more!
+
 ## Technologies Used
 
 - Java SE17.
@@ -34,16 +38,16 @@ This implementation demonstrates a solid understanding of object-oriented princi
 ## Media
 
 > Start menu.
-> <img src="./img/img1.png" alt="Logo" width="600" height="600">
+<img src="./img/img1.png" alt="Logo" width="600" height="600">
 
 > Gameplay screen.
-> <img src="./img/img3.png" alt="v" width="600" height="600">
+<img src="./img/img3.png" alt="v" width="600" height="600">
 
 > "Winning" screen.
-> <img src="./img/img4.png" alt="Winning screen" width="600" height="600">
+<img src="./img/img4.png" alt="Winning screen" width="600" height="600">
 
-> "Gameover" screen.
-> <img src="./img/img2.png" alt="Gameover screen" width="600" height="600">
+> "Game over" screen.
+<img src="./img/img2.png" alt="Game over screen" width="600" height="600">
 
 ## Getting Started
 
@@ -68,11 +72,6 @@ To get a local copy up and running follow these simple steps.
 
 3. **Run Gamemanager.java file!**
 
-### Known issues
-
-- Sometimes if you hit the brick sides the ball will be returned like it was hit the bottom of the brick.
-- The only way to replay the game is to close the game and run again.
-- The number of bricks depends on screen resolution(the higher the resolution the more bricks will be and vice versa).
 
 ## Acknowledgements
 
