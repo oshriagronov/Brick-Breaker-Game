@@ -41,6 +41,8 @@ public class Gameplay implements KeyListener, ActionListener{
     private boolean movingLeft = false;
     /** Tracks if the paddle should be moving right. */
     private boolean movingRight = false;
+    private boolean ballDefaultPosition = true;
+    private boolean spacePressed = false;
 
     /**
      * Constructs the Gameplay object.
@@ -87,13 +89,15 @@ public class Gameplay implements KeyListener, ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(!isGameOver()){
             updatePaddlePosition(); // Update paddle position every frame for smooth movement.
+            ballReset();
             // Check if the player missed the ball.
             if(ball.getY() > MISS_HEIGHT){
+                ball.setBallXVelocity(0);
+                ball.setBallYVelocity(0);
                 ball.setPosition(Screen.WINDOW_WIDTH / 2, Screen.WINDOW_HEIGHT / 2);
-                // Suggestion: The life point deduction logic is commented out.
-                // This should be re-enabled for the game to function as intended.
-                // screen.remove_HeartLabel(player.get_life_points() - 1);
-                // player.lose_life_point();
+                ballDefaultPosition = true;
+                screen.removeHeartLabel(player.getLifePoints() - 1);
+                player.loseLifePoint();
             }
             else {
                 ballMovement();
@@ -140,7 +144,6 @@ public class Gameplay implements KeyListener, ActionListener{
             ballBounceY();
             soundEffect.playCollisionSoundEffect();
         }
-
         // Update the ball's position based on its velocity.
         ball.setPosition(ball.getX() + ball.getBallXVelocity(), ball.getY() + ball.getBallYVelocity());
         screen.ballLabel.setLocation(ball.getX(), ball.getY());
@@ -219,6 +222,13 @@ public class Gameplay implements KeyListener, ActionListener{
         }
         screen.paddleLabel.setLocation(paddle.getX(), paddle.getY());
     }
+    private void ballReset(){
+        if(ballDefaultPosition && spacePressed){
+            ball.setBallXVelocity(ball.getDefaultBallXVelocity());
+            ball.setBallYVelocity(ball.getDefaultBallYVelocity());
+            ballDefaultPosition = false;
+        }
+    }
     /**
      * Handles key presses for paddle movement.
      * Sets boolean flags to indicate the start of movement.
@@ -227,22 +237,25 @@ public class Gameplay implements KeyListener, ActionListener{
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
+        if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT)
             movingLeft = true;
-        } else if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
+        else if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT)
             movingRight = true;
-        }
+        else if(key == KeyEvent.VK_SPACE)
+            spacePressed = true;
+
     }
 
     /** Handles key releases for paddle movement. Sets boolean flags to indicate the end of movement. */
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
+        if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT)
             movingLeft = false;
-        } else if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
+        else if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT)
             movingRight = false;
-        }
+        else if(key == KeyEvent.VK_SPACE)
+            spacePressed = false;
     }
     /** This method is intentionally left empty as it is not needed. */
     @Override

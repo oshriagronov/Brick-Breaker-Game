@@ -17,12 +17,14 @@ public class Ball {
      * The horizontal velocity of the ball in pixels per timer tick.
      * A larger number means a faster ball.
      */
-    private int xVelocity = 10;
+    private int defaultXVelocity = 0;
+    private int xVelocity = 0;
     /**
      * The vertical velocity of the ball in pixels per timer tick.
      * A larger number means a faster ball.
      */
-    private int yVelocity = 10;
+    private int defaultYVelocity = 10;
+    private int yVelocity = 0;
 
     /**
      * Constructs a new Ball object at the specified coordinates.
@@ -91,6 +93,9 @@ public class Ball {
         return xVelocity;
     }
 
+    public int getDefaultBallXVelocity(){
+        return defaultXVelocity;
+    }
     /**
      * Sets the horizontal velocity of the ball.
      * @param xVelocity The new horizontal velocity.
@@ -104,6 +109,10 @@ public class Ball {
      */
     public int getBallYVelocity(){
         return yVelocity;
+    }
+
+    public int getDefaultBallYVelocity(){
+        return defaultYVelocity;
     }
     /**
      * Sets the vertical velocity of the ball.

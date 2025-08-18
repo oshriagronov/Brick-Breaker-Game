@@ -3,7 +3,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import GameObjects.Brick;
 import GameObjects.BrickLines;
-
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,12 +31,12 @@ public class Screen extends JFrame{
     public JLabel paddleLabel;
     public JLabel ballLabel;
     private JLabel backgroundLabel;
-    private JLabel [] heartLabels;
     private JLabel playerScore;
-    private List <ArrayList<JLabel>> bricksLines = new ArrayList<>();
     private JLabel menuLogoLabel;
     private JLabel winingLogoLabel;
     private JLabel gameOverLogoLabel;
+    private List <JLabel> heartLabels;
+    private List <ArrayList<JLabel>> bricksLines = new ArrayList<>();
 
     /**
      * Constructs the main game screen (JFrame).
@@ -176,11 +175,11 @@ public class Screen extends JFrame{
      * @param height The height of a heart icon.
      */
     public void addHeartLabels(int numOfTries, ImageIcon icon, int x, int y, int width, int height){
-        heartLabels = new JLabel [numOfTries];
+        heartLabels = new ArrayList<>();
         for(int i = 0; i < numOfTries; i++){
-            heartLabels[i] = new JLabel(icon,JLabel.CENTER);
-            heartLabels[i].setBounds((x * i), y, width, height); // Hearts are placed side-by-side.
-            backgroundLabel.add(heartLabels[i]);
+            heartLabels.add(new JLabel(icon,JLabel.CENTER));
+            heartLabels.get(i).setBounds((x * i), y, width, height); // Hearts are placed side-by-side.
+            backgroundLabel.add(heartLabels.get(i));
         }
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
@@ -190,10 +189,11 @@ public class Screen extends JFrame{
      * Removes a heart icon from the screen when the player loses a life.
      * @param num The index of the heart label to remove.
      */
-    public void removeHeartLabel(int num){
-        backgroundLabel.remove(heartLabels[num]);
+    public void removeHeartLabel(int index){
+        backgroundLabel.remove(heartLabels.get(index));
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
+        heartLabels.remove(index);
     }
 
     /** Displays the winning screen. */
