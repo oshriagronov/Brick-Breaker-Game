@@ -149,7 +149,7 @@ public class Screen extends JFrame{
      */
     public void addPlayerScore(int score){
         playerScore = new JLabel("score: " + score);
-        playerScore.setBounds(0, 0, 200, 50);
+        playerScore.setBounds(10, 0, 200, 50);
         playerScore.setFont(new Font("Monospaced", Font.BOLD, 28));
         playerScore.setForeground(new Color(0, 255, 180));
         backgroundLabel.add(playerScore);
