@@ -20,11 +20,10 @@ This implementation demonstrates a solid understanding of object-oriented princi
 - Score system.
 
 ## Future plans
- The recently completed overhaul provides a solid foundation for version 2.0, which will include:
- - A more modern design
  - An option to reset the game after winning or losing
  - Possible bonuses that appear randomly when bricks are destroyed
  - Export the game as .exe file for Windows for easy setup for playing
+ - Adding a break that requires two hits to destroy. 
  - And more!
 
 ## Technologies Used

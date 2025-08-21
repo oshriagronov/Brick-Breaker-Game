@@ -93,7 +93,7 @@ public class GameManager implements KeyListener{
             screen.gameOverScreen();
         } else {
             currentLevel++;
-            if(currentLevel <= 2){
+            if(currentLevel <= 4){
                 screen.clearScreen();
                 ball.resetPosition();
                 lineOfBricks.resetBricks(currentLevel);
