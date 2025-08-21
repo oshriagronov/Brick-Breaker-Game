@@ -23,7 +23,7 @@ public class GameManager implements KeyListener{
     // e.g., `(Screen.WINDOW_WIDTH / 2) - (Paddle.getWidth() / 2)`.
     private final int PADDLE_DEFAULT_X = (Screen.WINDOW_WIDTH / 2) - (Paddle.getWidth() / 2);
     private final int PADDLE_DEFAULT_Y = Screen.WINDOW_HEIGHT - 70;
-    private final int numOfLinesOfBricks = 2;
+    private final int numOfLinesOfBricks = 4;
     private Screen screen;
     private SoundEffect sound_effect;
     private Paddle paddle;
@@ -83,7 +83,7 @@ public class GameManager implements KeyListener{
         // Render all game objects on the screen.
         screen.addPaddleLabel(Paddle.getIcon(), paddle.getX(), paddle.getY(), Paddle.getWidth(), Paddle.getHeight());
         screen.addBallLabel(Ball.getIcon(), ball.getX(), ball.getY(), Ball.getWidth(), Ball.getHeight());
-        screen.addHeartLabels(player.getLifePoints(), player.getHeartIcon(), player.getHeartX(), player.getHeartY(), player.getHeartWidth(), player.getHeartHeight());
+        screen.addHeartLabels(player.getLifePoints(), player.getHeartIcon(), Player.getHeartWidth(), Player.getHeartHeight());
         screen.addBricksLabels(lineOfBricks);
         screen.addPlayerScore(player.getScore());
         // Initialize and run the core gameplay logic.
@@ -96,7 +96,8 @@ public class GameManager implements KeyListener{
         } else {
             screen.clearScreen();
             screen.winingScreen();
-        }});
+        }
+        });
         gameplay.run();
     }
 

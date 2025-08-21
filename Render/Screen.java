@@ -3,6 +3,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import GameObjects.Brick;
 import GameObjects.BrickLines;
+import Main.Player;
+
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -64,11 +66,11 @@ public class Screen extends JFrame{
      */
     public void menuScreen(){
         menuLogoLabel = new JLabel(new ImageIcon(MENU_ICON_PATH));
-        menuLogoLabel.setBounds((WINDOW_WIDTH / 2) - 400, 0, 800, 279);
+        menuLogoLabel.setBounds((WINDOW_WIDTH / 2) - 400, 100, 800, 279);
         JLabel menuText = new JLabel("press any key to start!");
-        menuText.setBounds(WINDOW_WIDTH / 3 + 90, WINDOW_HEIGHT - 500, 600, 600);
-        menuText.setFont(new Font("Serif", Font.BOLD, 25));
-        menuText.setForeground(Color.MAGENTA);
+        menuText.setBounds(WINDOW_WIDTH / 4 + 125, WINDOW_HEIGHT - 600, 600, 600);
+        menuText.setFont(new Font("Monospaced", Font.BOLD, 28));
+        menuText.setForeground(new Color(0, 255, 180));
         backgroundLabel.add(menuLogoLabel);
         backgroundLabel.add(menuText);
         backgroundLabel.revalidate(); 
@@ -147,9 +149,9 @@ public class Screen extends JFrame{
      */
     public void addPlayerScore(int score){
         playerScore = new JLabel("score: " + score);
-        playerScore.setBounds(25, WINDOW_HEIGHT - 100, 200, 100);
-        playerScore.setFont(new Font("Serif", Font.PLAIN, 25));
-        playerScore.setForeground(Color.BLACK);
+        playerScore.setBounds(0, 0, 200, 50);
+        playerScore.setFont(new Font("Monospaced", Font.BOLD, 28));
+        playerScore.setForeground(new Color(0, 255, 180));
         backgroundLabel.add(playerScore);
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();
@@ -167,18 +169,18 @@ public class Screen extends JFrame{
 
     /**
      * Adds the heart icons to the screen to represent the player's lives.
-     * @param numOfTries The number of lives the player has.
+     * @param numOfHearts The number of lives the player has.
      * @param icon The heart icon.
      * @param x The base x-coordinate for the first heart.
      * @param y The y-coordinate for the hearts.
      * @param width The width of a heart icon.
      * @param height The height of a heart icon.
      */
-    public void addHeartLabels(int numOfTries, ImageIcon icon, int x, int y, int width, int height){
+    public void addHeartLabels(int numOfHearts, ImageIcon icon, int width, int height){
         heartLabels = new ArrayList<>();
-        for(int i = 0; i < numOfTries; i++){
+        for(int i = 0; i < numOfHearts; i++){
             heartLabels.add(new JLabel(icon,JLabel.CENTER));
-            heartLabels.get(i).setBounds((x * i), y, width, height); // Hearts are placed side-by-side.
+            heartLabels.get(i).setBounds(WINDOW_WIDTH - (Player.getHeartWidth() * (i + 1)) , 0, width, height); // Hearts are placed side-by-side.
             backgroundLabel.add(heartLabels.get(i));
         }
         backgroundLabel.revalidate(); 
@@ -208,7 +210,7 @@ public class Screen extends JFrame{
     /** Displays the game over screen. */
     public void gameOverScreen(){
         gameOverLogoLabel = new JLabel(new ImageIcon(GAME_OVER_ICON_PATH));
-        gameOverLogoLabel.setBounds((WINDOW_WIDTH / 2) - 275, 0, 623, 580);
+        gameOverLogoLabel.setBounds((WINDOW_WIDTH / 5), -50, 800, 800);
         backgroundLabel.add(gameOverLogoLabel);
         backgroundLabel.revalidate(); 
         backgroundLabel.repaint();

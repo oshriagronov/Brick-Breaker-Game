@@ -1,15 +1,30 @@
 package Render;
 public final class AssetPaths {
     // screen assets
-    public static final String ICON_PATH = "assets/icon.jpeg";
-    public static final String BACKGROUND_PATH = "assets/DARK-BG2-small.jpeg";
-    public static final String MENU_ICON_PATH = "assets/brick-breaker-menu.png";
+    public static final String ICON_PATH = "assets/icon.png";
+    public static final String BACKGROUND_PATH = "assets/background.png";
+    public static final String MENU_ICON_PATH = "assets/menu-logo.png";
     public static final String WINING_ICON_PATH = "assets/wining-logo.png";
-    public static final String GAME_OVER_ICON_PATH = "assets/gameover-logo.png";
+    public static final String GAME_OVER_ICON_PATH = "assets/game-over-logo.png";
     // game objects assets
     public static final String PADDLE_ICON_PATH = "assets/paddle.png";
     public static final String BALL_ICON_PATH = "assets/ball.png";
     public static final String BRICK_ICON_PATH = "assets/brick.png";
+    /*
+     public static final String [] BRICK_ICON_PATHS = {
+        "assets/bricks/brick1.png", 
+        "assets/bricks/brick2.png", 
+        "assets/bricks/brick3.png", 
+        "assets/bricks/brick4.png", 
+        "assets/bricks/brick5.png", 
+        "assets/bricks/brick6.png", 
+        "assets/bricks/brick7.png", 
+        "assets/bricks/brick8.png", 
+        "assets/bricks/brick9.png",
+        "assets/bricks/brick10.png",
+        "assets/bricks/brick11.png"
+        };
+     */
     public static final String HEART_ICON_PATH = "assets/heart.png";
     // sound effect assets
     public static final String COLLISION_SOUND_EFFECT_FILE_PATH = "assets/Bubble.wav";

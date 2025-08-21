@@ -8,8 +8,6 @@ import Render.AssetPaths;
 public class Player {
     private static final int HEART_WIDTH = 50;
     private static final int HEART_HEIGHT = 50;
-    private static final int HEART_Y_POSITION = 0;
-    private static final int HEART_X_POSITION = HEART_WIDTH;
     private static final String ICON_PATH = AssetPaths.HEART_ICON_PATH;
     private static ImageIcon heartIcon;
     /** The number of remaining lives for the player. */
@@ -64,7 +62,7 @@ public class Player {
      * Returns the width of the heart icon.
      * @return The heart icon's width in pixels.
      */
-    public int getHeartWidth() {
+    public static int getHeartWidth() {
         return HEART_WIDTH;
     }
 
@@ -72,26 +70,9 @@ public class Player {
      * Returns the height of the heart icon.
      * @return The heart icon's height in pixels.
      */
-    public int getHeartHeight() {
+    public static int getHeartHeight() {
         return HEART_HEIGHT;
     }
-
-    /**
-     * Returns the x-coordinate for positioning the heart icons.
-     * @return The x-coordinate.
-     */
-    public int getHeartX(){
-        return HEART_X_POSITION;
-    }
-
-    /**
-     * Returns the y-coordinate for positioning the heart icons.
-     * @return The y-coordinate.
-     */
-    public int getHeartY(){
-        return HEART_Y_POSITION;
-    }
-
     /**
      * Returns the ImageIcon for the heart.
      * @return The heart's ImageIcon.

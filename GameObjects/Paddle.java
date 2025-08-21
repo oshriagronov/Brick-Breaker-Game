@@ -7,7 +7,7 @@ import Render.AssetPaths;
  */
 public class Paddle{
     private static final String ICON_PATH = AssetPaths.PADDLE_ICON_PATH;
-    private static final int WIDTH = 210;
+    private static final int WIDTH = 129;
     private static final int HEIGHT = 34;
     private static ImageIcon paddleIcon;
     /** The speed at which the paddle moves horizontally. */

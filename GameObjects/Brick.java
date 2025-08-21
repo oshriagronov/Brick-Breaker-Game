@@ -7,9 +7,9 @@ import Render.AssetPaths;
  * It stores the brick's position, dimensions, and icon.
  */
 public class Brick{
-    private final static int WIDTH = 190;
-    private final static int HEIGHT = 50;
-    private final static String ICON_PATH = AssetPaths.BRICK_ICON_PATH;
+    private static final int WIDTH = 120;
+    private static final int HEIGHT = 40;
+    private static final String ICON_PATH = AssetPaths.BRICK_ICON_PATH;
     private static ImageIcon brickIcon;
     /**
      * The y-coordinate for the line of bricks. This value determines the

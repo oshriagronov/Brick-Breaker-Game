@@ -136,11 +136,11 @@ public class Gameplay implements KeyListener, ActionListener{
             screen.refreshPlayerScore(player.getScore());
             soundEffect.playBrickCollisionSoundEffect();
         }
-        else if(ballBounds.getX() >= BALL_SCREEN_COLLISION_X || ballBounds.getX() < 0){
+        else if((ballBounds.getX() > BALL_SCREEN_COLLISION_X && ball.getBallXVelocity() > 0) || (ballBounds.getX() < 0 && ball.getBallXVelocity() < 0)){
             ballBounceX();
             soundEffect.playCollisionSoundEffect();
         }
-        else if(ballBounds.getY() < 0){
+        else if(ballBounds.getY() < 0 && ball.getBallYVelocity() < 0){
             ballBounceY();
             soundEffect.playCollisionSoundEffect();
         }
@@ -154,8 +154,8 @@ public class Gameplay implements KeyListener, ActionListener{
      * @param obj The bounding rectangle of the object to check against.
      * @return true if a collision occurred, false otherwise.
      */
-    private boolean paddleCollision(Rectangle ballBounds, Rectangle obj){
-            if(ballBounds.intersects(obj)){
+    private boolean paddleCollision(Rectangle ballBounds, Rectangle paddleBounds){
+            if(ballBounds.intersects(paddleBounds) && ball.getBallYVelocity() > 0){
                 // Determine bounce direction based on the intersection dimensions.
                 int paddleCenter = paddle.getX() + Paddle.getWidth() / 2;
                 int ballCenter = ball.getX() + Ball.getWidth() / 2;
