@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
  */
 
 import Render.AssetPaths;
+import Render.Screen;
 public class Ball {
     private static final String ICON_PATH = AssetPaths.BALL_ICON_PATH;
     private static final int WIDTH = 53;
@@ -35,6 +36,12 @@ public class Ball {
         ballIcon = new ImageIcon(ICON_PATH);
         this.x = x;
         this.y = y;
+    }
+
+    public void resetPosition(){
+        this.setPosition(Screen.WINDOW_WIDTH / 2, Screen.WINDOW_HEIGHT / 2);
+        this.setBallXVelocity(0);
+        this.setBallYVelocity(0);
     }
 
     /**

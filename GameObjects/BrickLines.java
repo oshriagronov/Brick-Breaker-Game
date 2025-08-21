@@ -54,4 +54,11 @@ public class BrickLines {
             brickLines.remove(lineIndex);
         }
     }
+
+    public void resetBricks(int numOfLines){
+        for(int i = 0; i < numOfLines; i++){
+            // Each new line is placed below the previous one.
+            brickLines.add(new BrickLine((initialLineHeight * (i + 1))));
+        } 
+    }
 }

@@ -24,6 +24,7 @@ This implementation demonstrates a solid understanding of object-oriented princi
  - A more modern design
  - An option to reset the game after winning or losing
  - Possible bonuses that appear randomly when bricks are destroyed
+ - Export the game as .exe file for Windows for easy setup for playing
  - And more!
 
 ## Technologies Used

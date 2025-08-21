@@ -114,6 +114,7 @@ public class Screen extends JFrame{
      * @param numOfBricks The total number of bricks.
      */
     public void addBricksLabels(BrickLines lineOfBricks){
+        bricksLines.clear();
         for(int i = 0; i < lineOfBricks.getNumOfLines(); i++){
             bricksLines.add(new ArrayList<>());
             for(int j = 0; j < lineOfBricks.getLineByIndex(i).getNumOfBricks(); j++){

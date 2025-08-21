@@ -92,9 +92,7 @@ public class Gameplay implements KeyListener, ActionListener{
             ballReset();
             // Check if the player missed the ball.
             if(ball.getY() > MISS_HEIGHT){
-                ball.setBallXVelocity(0);
-                ball.setBallYVelocity(0);
-                ball.setPosition(Screen.WINDOW_WIDTH / 2, Screen.WINDOW_HEIGHT / 2);
+                ball.resetPosition();
                 ballDefaultPosition = true;
                 screen.removeHeartLabel(player.getLifePoints() - 1);
                 player.loseLifePoint();

@@ -8,13 +8,10 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
 /**
  * The GameManager class is the central component of the game.
  * It is responsible for initializing the game objects, managing the game state,
  * handling user input, and coordinating the overall game flow from the menu to the game's end.
- * Suggestion: Consider creating a dedicated GameState enum (e.g., MENU, PLAYING, GAME_OVER)
- * to manage the state transitions more explicitly, rather than relying on boolean flags like `key_pressed`.
  */
 public class GameManager implements KeyListener{
     private final int Ball_DEFAULT_X = Screen.WINDOW_WIDTH / 2;
@@ -23,7 +20,7 @@ public class GameManager implements KeyListener{
     // e.g., `(Screen.WINDOW_WIDTH / 2) - (Paddle.getWidth() / 2)`.
     private final int PADDLE_DEFAULT_X = (Screen.WINDOW_WIDTH / 2) - (Paddle.getWidth() / 2);
     private final int PADDLE_DEFAULT_Y = Screen.WINDOW_HEIGHT - 70;
-    private final int numOfLinesOfBricks = 4;
+    //private final int numOfLinesOfBricks = 1;
     private Screen screen;
     private SoundEffect sound_effect;
     private Paddle paddle;
@@ -34,6 +31,7 @@ public class GameManager implements KeyListener{
     private int life_points = 3;
     /** The points awarded for breaking a single brick. */
     private int score_points = 100;
+    private int currentLevel = 1;
     /** Tracks if a key has been pressed to start the game from the menu. */
     private boolean key_pressed;
     /**
@@ -52,7 +50,7 @@ public class GameManager implements KeyListener{
         paddle = new Paddle(PADDLE_DEFAULT_X, PADDLE_DEFAULT_Y);
         ball = new Ball(Ball_DEFAULT_X, BALL_DEFAULT_Y);
         player = new Player(life_points, score_points);
-        lineOfBricks = new BrickLines(numOfLinesOfBricks);
+        lineOfBricks = new BrickLines(currentLevel);
         screen.addKeyListener(this);
     }
 
@@ -94,13 +92,22 @@ public class GameManager implements KeyListener{
             screen.clearScreen();
             screen.gameOverScreen();
         } else {
-            screen.clearScreen();
-            screen.winingScreen();
+            currentLevel++;
+            if(currentLevel <= 2){
+                screen.clearScreen();
+                ball.resetPosition();
+                lineOfBricks.resetBricks(currentLevel);
+                screen.addBricksLabels(lineOfBricks);
+                start();
+            }
+            else{
+                screen.clearScreen();
+                screen.winingScreen();
+            }
         }
         });
         gameplay.run();
     }
-
     /**
      * Invoked when a key has been pressed. Used here to detect the first key press
      * on the menu screen to start the game.
