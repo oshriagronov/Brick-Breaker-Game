@@ -38,6 +38,9 @@ public class Ball {
         this.y = y;
     }
 
+    /**
+     * Place the ball at the middle of the screen to wait for space to drop, use when the paddle miss the ball or it's new level
+     */
     public void resetPosition(){
         this.setPosition(Screen.WINDOW_WIDTH / 2, Screen.WINDOW_HEIGHT / 2);
         this.setBallXVelocity(0);

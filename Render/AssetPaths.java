@@ -10,21 +10,6 @@ public final class AssetPaths {
     public static final String PADDLE_ICON_PATH = "assets/paddle.png";
     public static final String BALL_ICON_PATH = "assets/ball.png";
     public static final String BRICK_ICON_PATH = "assets/brick.png";
-    /*
-     public static final String [] BRICK_ICON_PATHS = {
-        "assets/bricks/brick1.png", 
-        "assets/bricks/brick2.png", 
-        "assets/bricks/brick3.png", 
-        "assets/bricks/brick4.png", 
-        "assets/bricks/brick5.png", 
-        "assets/bricks/brick6.png", 
-        "assets/bricks/brick7.png", 
-        "assets/bricks/brick8.png", 
-        "assets/bricks/brick9.png",
-        "assets/bricks/brick10.png",
-        "assets/bricks/brick11.png"
-        };
-     */
     public static final String HEART_ICON_PATH = "assets/heart.png";
     // sound effect assets
     public static final String COLLISION_SOUND_EFFECT_FILE_PATH = "assets/Bubble.wav";

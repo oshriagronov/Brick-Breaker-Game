@@ -16,8 +16,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class GameManager implements KeyListener{
     private final int Ball_DEFAULT_X = Screen.WINDOW_WIDTH / 2;
     private final int BALL_DEFAULT_Y = Screen.WINDOW_HEIGHT / 2;
-    // Suggestion: Avoid magic numbers. The paddle's default X should be calculated based on its width,
-    // e.g., `(Screen.WINDOW_WIDTH / 2) - (Paddle.getWidth() / 2)`.
     private final int PADDLE_DEFAULT_X = (Screen.WINDOW_WIDTH / 2) - (Paddle.getWidth() / 2);
     private final int PADDLE_DEFAULT_Y = Screen.WINDOW_HEIGHT - 70;
     //private final int numOfLinesOfBricks = 1;
@@ -142,8 +140,6 @@ public class GameManager implements KeyListener{
     /**
      * Verifies the existence of all required asset files (images and sounds).
      * If a file is not found, it displays an error window.
-     * Suggestion: This method could be improved to report all missing files at once
-     * instead of stopping at the first one.
      * @return true if an error occurred (e.g., a file is missing), false otherwise.
      */
     public boolean CheckPath(){
@@ -165,8 +161,6 @@ public class GameManager implements KeyListener{
             return true;
         }
         // Check for sound assets.
-        // Suggestion: For better debugging, log the stack trace (e.g., e.printStackTrace())
-        // in the catch blocks in addition to showing an error window.
         try {
             sound_effect = new SoundEffect();
         } catch (LineUnavailableException e) {

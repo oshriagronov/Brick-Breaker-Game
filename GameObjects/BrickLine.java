@@ -13,9 +13,9 @@ public class BrickLine {
     /** The vertical position (y-coordinate) of this line of bricks on the screen. */
     private int lineHeight;
     /** The calculated number of bricks that can fit in a single line based on screen width. */
-    private static final int num_of_bricks = Screen.WINDOW_WIDTH / Brick.getWidth();
+    private static final int NUMBER_OF_BRICKS = Screen.WINDOW_WIDTH / Brick.getWidth();
     /** The calculated gap between each brick to ensure they are evenly spaced across the screen. */
-    private static final int bricks_gap = ((Screen.WINDOW_WIDTH - (num_of_bricks * Brick.getWidth())) / num_of_bricks) / 2;
+    private static final int BRICK_GAP = ((Screen.WINDOW_WIDTH - (NUMBER_OF_BRICKS * Brick.getWidth())) / NUMBER_OF_BRICKS) / 2;
 
     /**
      * Constructs a new line of bricks at a specified vertical position.
@@ -26,10 +26,10 @@ public class BrickLine {
         listOfBricks = new ArrayList<>();
         this.lineHeight = lineHeight;
         int x_brick_location = 0;
-        for (int i = 0; i < num_of_bricks; i++) {
-            x_brick_location += bricks_gap;
+        for (int i = 0; i < NUMBER_OF_BRICKS; i++) {
+            x_brick_location += BRICK_GAP;
             listOfBricks.add(new Brick(x_brick_location, lineHeight));
-            x_brick_location += Brick.getWidth() + bricks_gap;
+            x_brick_location += Brick.getWidth() + BRICK_GAP;
         }
     }
 
